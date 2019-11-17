@@ -7,5 +7,19 @@ module.exports = {
     'plugin:vue/essential',
     '@vue/standard'
   ],
-  parser: 'babel-eslint',
+  parserOptions: {
+    parser: 'babel-eslint'
+  },
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    "indent": ["error", 4,{ "SwitchCase": 1 }],
+    "no-trailing-spaces": ["error", { "skipBlankLines": true }],
+    "keyword-spacing": ["off"],
+    "space-before-blocks":"off",
+    "no-unused-vars":"warn",
+    "space-before-function-paren":"off",
+    "arrow-spacing":"off",
+    "vue/no-unused-components":"warn"
+  },
 }
