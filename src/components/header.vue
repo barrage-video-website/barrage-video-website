@@ -4,7 +4,7 @@
           <ul class="nav-con-ul">
               <li class="nav-item">
                   <div class="title">主页</div>
-                    <div class="background"></div>
+                    <div id="background"></div>
               </li>
                 <li class="nav-item">
                   <div class="title">游戏中心</div>
@@ -38,6 +38,7 @@
                      </li>
                     <li class="nav-item">
                         <div class="title">创作中心</div>
+                        <div id="background-ceter"></div>
                      </li>
               </ul>
 
@@ -78,12 +79,26 @@ export default {
                 padding: 0 7px;
                 padding-left: 20px;
             }
-            .background{
+            #background{
+                background-image: url('icons.png');
+                background-position-x: -80px;
+                background-position-y: -210px;
+                width: 41px;
+                height: 36px;
                 position: absolute;
-                left: 9px;
-                top: -1px;
+                left: -1px;
+                top: 6px;
                 columns: #00a1d0;
-                font-size: 20px;
+            }
+            #background-ceter{
+                left: -1px;
+                top: 10px;
+                position: absolute;
+                width: 41px;
+                height: 36px;
+                background-image: url('icons.png');
+                background-position-x: -80px;
+                background-position-y: -1240px;
             }
         }
     }
