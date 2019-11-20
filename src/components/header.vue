@@ -65,12 +65,11 @@ export default {
         display: flex;
         list-style: none;
         .nav-item{
-            margin-left: 12px; 
             padding-left: 12px; 
             float: left;
             text-align: center;
-            line-height: 42px;
-            height: 42px;
+            line-height: 30px;
+            height: 30px;
             position: relative;
             white-space: nowrap;
             .title{
@@ -80,7 +79,7 @@ export default {
                 padding-left: 20px;
             }
             #background{
-                background-image: url('icons.png');
+                background-image: url('../pictures/icons.png');
                 background-position-x: -80px;
                 background-position-y: -210px;
                 width: 41px;
@@ -96,7 +95,7 @@ export default {
                 position: absolute;
                 width: 41px;
                 height: 36px;
-                background-image: url('icons.png');
+                background-image: url('../pictures/icons.png');
                 background-position-x: -80px;
                 background-position-y: -1240px;
             }

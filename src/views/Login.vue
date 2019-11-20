@@ -4,13 +4,15 @@
       <!-- TODO -->
       <main>    
             <div class="top-banner">
-            <img src="" alt="">
+            <img src="../pictures/rl_top.35edfde.png" alt="">
         </div>
         <div class="title-line">
             <span class="tit">登录</span>
         </div>
         <div class="login-box">
-            <div class="login-left"></div>
+            <div class="login-left">
+                <div class="bilii-logo"></div>
+            </div>
             <div class="line"></div>
             <div class="login-right">
                 <div class="form">
@@ -77,6 +79,15 @@ export default {
         height: 100%;
         float: left;
         width: 488px;
+        position: relative;
+        .bilii-logo{
+            background: url('../pictures/2233login.af9c53d.png')  no-repeat;
+            width: 100%;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top: 100px;
+        }
     }
     .line{
         float: left;
