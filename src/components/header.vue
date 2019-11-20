@@ -61,6 +61,7 @@ export default {
 <style lang="less" scoped>
     .header{
         display: flex;
+        justify-content: space-between;
         width: 980px;
         margin: 0 auto;
     }
@@ -73,11 +74,12 @@ export default {
             padding-left: 12px; 
             float: left;
             text-align: center;
-            line-height: 26px;
-            height: 26px;
+            line-height: 14px;
+            height: 14px;
             position: relative;
             white-space: nowrap;
             .title{
+                font-size: 14px;
                 color:#222;
                 height: 100%;
                 padding: 0 7px;
@@ -91,12 +93,12 @@ export default {
                 height: 36px;
                 position: absolute;
                 left: -1px;
-                top: 2px;
+                top: -4px;
                 columns: #00a1d0;
             }
             #background-ceter{
                 left: -1px;
-                top: 6px;
+                top: 0;
                 position: absolute;
                 width: 41px;
                 height: 36px;
