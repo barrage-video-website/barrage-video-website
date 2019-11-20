@@ -5,8 +5,14 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    // 登录页
+    // 主页
     path: '/',
+    name: 'Home',
+    component: () => import( '@/views/Home.vue'),
+  },
+  {
+    // 主页
+    path: '/home',
     name: 'Home',
     component: () => import( '@/views/Home.vue'),
   },

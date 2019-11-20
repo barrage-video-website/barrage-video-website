@@ -3,7 +3,7 @@
       <bilil-header></bilil-header>
       <!-- TODO -->
       <main>    
-            <div class="top-banner">
+        <div class="top-banner">
             <img src="../pictures/rl_top.35edfde-1.png" alt="">
         </div>
         <div class="title-line">
