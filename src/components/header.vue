@@ -37,8 +37,11 @@
                         <div class="title">历史</div>
                      </li>
                     <li class="nav-item">
-                        <div class="title">创作中心</div>
+                        <div class="title" >创作中心</div>
                         <div id="background-ceter"></div>
+                     </li>
+                    <li class="nav-item" id="create-centre" >
+                        <div class="title" >投稿</div>
                      </li>
               </ul>
 
@@ -62,14 +65,16 @@ export default {
         margin: 0 auto;
     }
     .nav-con-ul{
+        position: relative;
         display: flex;
         list-style: none;
         .nav-item{
+            cursor: pointer;
             padding-left: 12px; 
             float: left;
             text-align: center;
-            line-height: 30px;
-            height: 30px;
+            line-height: 26px;
+            height: 26px;
             position: relative;
             white-space: nowrap;
             .title{
@@ -86,12 +91,12 @@ export default {
                 height: 36px;
                 position: absolute;
                 left: -1px;
-                top: 6px;
+                top: 2px;
                 columns: #00a1d0;
             }
             #background-ceter{
                 left: -1px;
-                top: 10px;
+                top: 6px;
                 position: absolute;
                 width: 41px;
                 height: 36px;
@@ -103,6 +108,10 @@ export default {
     }
     .nav-wrapper-right{
         display: flex;
+    }
+    #create-centre{
+        border-radius: 5px;
+        background-color:#fb7299; 
     }
 
 </style>
