@@ -4,7 +4,7 @@
       <!-- TODO -->
       <main>    
             <div class="top-banner">
-            <img src="../pictures/rl_top.35edfde.png" alt="">
+            <img src="../pictures/rl_top.35edfde-1.png" alt="">
         </div>
         <div class="title-line">
             <span class="tit">登录</span>
