@@ -38,6 +38,12 @@ export default {
     components: {
         bililHeader,
         [Input.name]: Input,
+    },
+    data(){
+        return {
+            account: '',
+            password: ''
+        }
     }
 }
 </script>
