@@ -28,27 +28,17 @@
           </ul>
       </div>
       <div class="nav-wrapper-right">
-          <div class="nav-con">
               <ul class="nav-con-ul">
-                    <li class="nav-item">
-                        <div class="title">动态</div>
+
+                    <li class="nav-item" >
+                        <div class="title">登录</div>
                     </li>
-                    <li class="nav-item">
-                        <div class="title">历史</div>
-                     </li>
-                    <li class="nav-item">
-                        <div class="title" >创作中心</div>
-                        <div id="background-ceter"></div>
-                     </li>
-                    <li class="nav-item" id="create-centre" >
-                        <div class="title" >投稿</div>
-                     </li>
+                    <li class="nav-item register" >
+                        <div class="title">注册</div>
+                    </li>
               </ul>
 
-          </div>
-
       </div>
-      <div></div>
   </div>
 </template>
 
@@ -62,8 +52,10 @@ export default {
     .header{
         display: flex;
         justify-content: space-between;
-        width: 980px;
         margin: 0 auto;
+    }
+    .nav-wrapper-right{
+        float: right;
     }
     .nav-con-ul{
         position: relative;
@@ -108,12 +100,13 @@ export default {
             }
         }
     }
-    .nav-wrapper-right{
-        display: flex;
-    }
     #create-centre{
         border-radius: 5px;
         background-color:#fb7299;
+    }
+
+    .register{
+        margin-right: 40px;
     }
 
 </style>
