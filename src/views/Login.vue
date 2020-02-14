@@ -2,7 +2,7 @@
   <div class="Login">
       <bilil-header></bilil-header>
       <!-- TODO -->
-      <main>    
+      <main>
         <div class="top-banner">
             <img src="../pictures/rl_top.35edfde-1.png" alt="">
         </div>
@@ -37,9 +37,9 @@ export default {
     name: 'login',
     components: {
         bililHeader,
-        [Input.name]: Input,
+        [Input.name]: Input
     },
-    data(){
+    data () {
         return {
             account: '',
             password: ''

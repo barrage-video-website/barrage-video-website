@@ -90,7 +90,7 @@ export default {
                 display: flex;
                .nav-item-header{
                    margin-right: 15px;
-                   width: 24px; 
+                   width: 24px;
                    text-align: center;
                    position: relative;
                 //    .nav-name{

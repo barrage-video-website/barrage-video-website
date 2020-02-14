@@ -1,5 +1,5 @@
 export {
     faUserSecret,
-    faTv,
+    faTv
 
 } from '@fortawesome/free-solid-svg-icons'

@@ -71,7 +71,7 @@ export default {
         list-style: none;
         .nav-item{
             cursor: pointer;
-            padding-left: 12px; 
+            padding-left: 12px;
             float: left;
             text-align: center;
             line-height: 14px;
@@ -113,7 +113,7 @@ export default {
     }
     #create-centre{
         border-radius: 5px;
-        background-color:#fb7299; 
+        background-color:#fb7299;
     }
 
 </style>
