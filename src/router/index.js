@@ -21,6 +21,12 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: () => import('@/views/Login.vue')
+    },
+    {
+        // 登录页
+        path: '/video/:videoId',
+        name: 'Video',
+        component: () => import('@/views/Video.vue')
     }
 ]
 

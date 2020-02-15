@@ -5,11 +5,12 @@
             <div class="head-banner">
                 <img  src="../pictures/7197cae46569a49abd98e0c51348068831be6a85.png">
             </div>
-
         </header>
-            <bilil-wrapper></bilil-wrapper>
-        <main>
 
+        <main>
+            <bilil-wrapper></bilil-wrapper>
+            <img class="guanggao" src="../pictures/60b856e5b5fcbaa16ee8fd1fe54b8670.jpg">
+            <bilil-cartoon></bilil-cartoon>
         </main>
     </div>
 </template>
@@ -17,11 +18,13 @@
 <script>
 import bililHeader from '@/components/header.vue'
 import bililWrapper from '@/components/wrapper.vue'
+import bililCartoon from '@/components/cartoon.vue'
 export default {
     name: 'Home',
     components: {
         bililHeader,
-        bililWrapper
+        bililWrapper,
+        bililCartoon
     }
 }
 </script>
@@ -38,7 +41,8 @@ ul{
         height: 100%;
     }
     main{
-        width: 1000px;
+        width: 1200px;
+        margin: 0 auto;
     }
     #header{
         width: 100%;
@@ -57,5 +61,9 @@ ul{
     .head-banner{
         z-index: 1;
         float: left;
+    }
+    .guanggao{
+        width: 1200px;
+        height: 100px;
     }
 </style>

@@ -89,6 +89,30 @@
                     <div class="title">影视</div>
                     <em>999+</em>
                 </div>
+                <div class="center-contaniner">
+                    <div class="title">影视</div>
+                    <em>999+</em>
+                </div>
+                <div class="center-contaniner">
+                    <div class="title">影视</div>
+                    <em>999+</em>
+                </div>
+                <div class="center-contaniner">
+                    <div class="title">影视</div>
+                    <em>999+</em>
+                </div>
+                <div class="center-contaniner">
+                    <div class="title">影视</div>
+                    <em>999+</em>
+                </div>
+                <div class="center-contaniner">
+                    <div class="title">影视</div>
+                    <em>999+</em>
+                </div>
+                <div class="center-contaniner">
+                    <div class="title">影视</div>
+                    <em>999+</em>
+                </div>
             </div>
             <div class="tab-line-itnl"></div>
             <div class="primary-menu-right">
@@ -138,7 +162,7 @@ ul{
         margin: 0 auto;
         position: relative;
         height: 108px;
-        width: 1000px;
+        width: 1200px;
         margin-top: 10px;
         align-items: center;
         padding: 20px 0;
@@ -188,7 +212,7 @@ ul{
         }
         .primary-menu-center{
             display: flex;
-            width: 585px;
+            width: 831px;
             height: 100%;
             flex-wrap: wrap;
             .center-contaniner{
