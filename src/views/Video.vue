@@ -12,7 +12,13 @@
                 <div class="play-wrapp">
                     <div class="play-wrapp-top"></div>
                     <div class="play-wrapp-video">
-                        <video src=""></video>
+                        <video id="video" src="../videos/[拯救大兵瑞恩(国英双语)].Saving.Private.Ryan.1998.BluRay.720p.x264.AC3.2Audios-CMCT_Trim.mp4"></video>
+                    </div>
+                    <div class="player-video-buttom"></div>
+                    <div class="player-pause" @click="pause()">
+                        <div class="player-sig-container">
+                            <div class="player-sig"></div>
+                        </div>
                     </div>
                 </div>
           </div>
@@ -27,6 +33,16 @@ export default {
     name: 'video',
     components: {
         bililHeader
+    },
+    methods: {
+        pause(){
+            const myVid = document.getElementById('video')
+            if(myVid.paused){
+                myVid.play()
+            }else{
+                myVid.pause()
+            }
+        }
     }
 }
 </script>
@@ -73,9 +89,44 @@ export default {
         width: 100%;
         height: 676px;
         background: black;
+        position: relative;
         .play-wrapp-top{
             width: 100%;
             height: 48px;
+        }
+        .play-wrapp-video{
+            video{
+                max-width: 964px;
+            }
+
+        }
+        // 暂停符号
+        .player-pause{
+            width: 64px;
+            height: 64px;
+            background: white;
+            position: absolute;
+            right: 34px;
+            bottom: 70px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            .player-sig-container{
+                position: relative;
+            }
+            .player-sig{
+                position: absolute;
+                top: -15px;
+                left: -10px;
+                width: 0;
+                border-top: 20px solid transparent;
+                border-right: 20px solid transparent;
+                border-bottom: 20px solid transparent;
+                border-left: 20px solid black;
+
+            }
         }
     }
 </style>
