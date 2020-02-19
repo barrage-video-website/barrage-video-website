@@ -23,10 +23,24 @@ const routes = [
         component: () => import('@/views/Login.vue')
     },
     {
-        // 登录页
+        // 播放video
         path: '/video/:videoId',
         name: 'Video',
         component: () => import('@/views/Video.vue')
+    },
+    {
+        // 个人中心
+        path: '/account',
+        name: 'Account',
+        component: () => import('@/views/Account.vue'),
+        children: [
+            {
+                // 投稿
+                path: '/account/contribute',
+                name: 'Contribute',
+                component: () => import('@/views/Account/Contribute.vue')
+            }
+        ]
     }
 ]
 

@@ -33,6 +33,9 @@
                     <li class="nav-item" >
                         <div class="title">登录</div>
                     </li>
+                    <li class="nav-item contribute" >
+                        <div class="title" @click="goToContribute">投稿</div>
+                    </li>
                     <li class="nav-item register" >
                         <div class="title">注册</div>
                     </li>
@@ -44,7 +47,12 @@
 
 <script>
 export default {
-    name: 'HearderNavitation'
+    name: 'HearderNavitation',
+    methods: {
+        goToContribute() {
+            this.$router.push({ name: 'Account' })
+        }
+    }
 }
 </script>
 
