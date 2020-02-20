@@ -20,7 +20,7 @@
                     <el-input v-model="password" placeholder="请输入密码"></el-input>
                     <div class="forget">忘记密码</div>
                     <div class="btn-box">
-                        <div class="btn btn-login">登录</div>
+                        <div class="btn btn-login" @click="login">登录</div>
                         <div class="btn btn-register">注册</div>
                     </div>
                 </div>
@@ -31,8 +31,11 @@
 </template>
 
 <script>
+import api from '@/api'
+import apiPrefix from '@/api/apiPrefix.js'
 import bililHeader from '@/components/header.vue'
-import { Input } from 'element-ui'
+import { Input, Message } from 'element-ui'
+
 export default {
     name: 'login',
     components: {
@@ -43,6 +46,16 @@ export default {
         return {
             account: '',
             password: ''
+        }
+    },
+    methods: {
+        login(){
+            this.$axios.post(apiPrefix.api + api.login, {
+                account: this.account,
+                password: this.password
+            }).then(()=>{
+                Message.success('请求成功')
+            })
         }
     }
 }
