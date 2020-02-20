@@ -1,5 +1,5 @@
 <template>
-  <div class="Login">
+  <div class="Register">
       <bilil-header></bilil-header>
       <!-- TODO -->
       <main>
@@ -7,21 +7,16 @@
             <img src="../pictures/rl_top.35edfde-1.png" alt="">
         </div>
         <div class="title-line">
-            <span class="tit">登录</span>
+            <span class="tit">注册</span>
         </div>
         <div class="login-box">
-            <div class="login-left">
-                <div class="bilii-logo"></div>
-            </div>
-            <div class="line"></div>
             <div class="login-right">
                 <div class="form">
                     <el-input v-model="account" placeholder="请输入账号"></el-input>
                     <el-input v-model="password" placeholder="请输入密码"></el-input>
-                    <div class="forget">忘记密码</div>
+                    <el-input v-model="nickname" placeholder="请输入昵称"></el-input>
                     <div class="btn-box">
-                        <div class="btn btn-login" @click="login">登录</div>
-                        <div class="btn btn-register" @click="goToregister">注册</div>
+                        <el-button  type="primary" class="register-btn" @click="register">注册</el-button>
                     </div>
                 </div>
             </div>
@@ -45,27 +40,26 @@ export default {
     data () {
         return {
             account: '',
-            password: ''
+            password: '',
+            nickname: ''
         }
     },
     methods: {
-        login(){
-            this.$axios.post(apiPrefix.api + api.login, {
+        register(){
+            this.$axios.post(apiPrefix.api + api.register, {
                 account: this.account,
-                password: this.password
+                password: this.password,
+                nickname: this.nickname
             }).then(()=>{
                 Message.success('请求成功')
             })
-        },
-        goToregister(){
-            this.$router.push({ name: 'Register' })
         }
     }
 }
 </script>
 
 <style lang="less" scoped>
-    .login{
+    .register{
         height: 100%;
     }
     .top-banner{
@@ -78,7 +72,6 @@ export default {
         width: 980px;
         height: 28px;
         margin: 0 auto;
-        // border:1px solid #ddd;
         border-bottom: 1px solid #ddd;
         margin-bottom: 28px;
         text-align: center;
@@ -96,6 +89,8 @@ export default {
         width: 980px;
         height: 367px;
         margin: 0 auto;
+        display: flex;
+        justify-content: center;
     }
     .login-left{
         height: 100%;
@@ -141,7 +136,7 @@ export default {
         margin-bottom: 40px;
     }
     .btn-box{
-        display: flex;
+        width: 100%;
     }
     .btn{
         border: 1px solid #0381aa;
@@ -160,5 +155,8 @@ export default {
         border: 1px solid black;
         background: white;
         color: #000;
+    }
+    .register-btn{
+        width: 100%;
     }
 </style>

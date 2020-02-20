@@ -4,5 +4,7 @@ export default{
     // 注销
     logout: '/logout',
     // 上传
-    upload: '/upload'
+    upload: '/upload',
+    // 注册
+    register: '/register'
 }

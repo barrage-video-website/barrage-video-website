@@ -23,6 +23,12 @@ const routes = [
         component: () => import('@/views/Login.vue')
     },
     {
+    // 注册
+        path: '/register',
+        name: 'Register',
+        component: () => import('@/views/Register.vue')
+    },
+    {
         // 播放video
         path: '/video/:videoId',
         name: 'Video',
