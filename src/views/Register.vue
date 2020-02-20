@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import api from '@/api'
-import apiPrefix from '@/api/apiPrefix.js'
+// import api from '@/api'
+// import apiPrefix from '@/api/core/apiPrefix.js'
 import bililHeader from '@/components/header.vue'
 import { Input, Message } from 'element-ui'
 
@@ -45,15 +45,15 @@ export default {
         }
     },
     methods: {
-        register(){
-            this.$axios.post(apiPrefix.api + api.register, {
-                account: this.account,
-                password: this.password,
-                nickname: this.nickname
-            }).then((response)=>{
-                Message.success(response.msg)
-            })
-        }
+        // register(){
+        //     this.$axios.post(apiPrefix.api + api.register, {
+        //         account: this.account,
+        //         password: this.password,
+        //         nickname: this.nickname
+        //     }).then((response)=>{
+        //         Message.success(response.msg)
+        //     })
+        // }
     }
 }
 </script>

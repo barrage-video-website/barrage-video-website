@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import api from '@/api'
-import apiPrefix from '@/api/apiPrefix.js'
+// import api from '@/api'
+// import apiPrefix from '@/api/apiPrefix.js'
 import { Message } from 'element-ui'
 export default {
     name: 'Contribute',
@@ -34,19 +34,19 @@ export default {
         handlePreview(file) {
             this.file = file
             console.log(this.file)
-        },
-        // 上传
-        submitUpload(){
-            const formData = new FormData()
-            formData.append('video_file', this.file)
-            this.$axios
-                .post(apiPrefix.api + api.upload, formData)
-                .then((response)=>{
-                    Message.success('请求成功')
-                    this.fileList = ''
-                    this.leadAccounts = false
-                })
         }
+        // 上传
+        // submitUpload(){
+        //     const formData = new FormData()
+        //     formData.append('video_file', this.file)
+        //     this.$axios
+        //         .post(apiPrefix.api + api.upload, formData)
+        //         .then((response)=>{
+        //             Message.success('请求成功')
+        //             this.fileList = ''
+        //             this.leadAccounts = false
+        //         })
+        // }
     }
 }
 

@@ -32,7 +32,9 @@
 
 <script>
 import api from '@/api'
-import apiPrefix from '@/api/apiPrefix.js'
+import apiPrefix from '@/api/core/apiPrefix.js'
+import axios from '@/api/core/axios.js'
+import tokenManager from '@/api/core/tokenManager.js'
 import bililHeader from '@/components/header.vue'
 import { Input, Message } from 'element-ui'
 
@@ -50,11 +52,11 @@ export default {
     },
     methods: {
         login(){
-            this.$axios.post(apiPrefix.api + api.login, {
+            axios.post(apiPrefix.api + api.login, {
                 account: this.account,
                 password: this.password
             }).then((response)=>{
-                Message.success(response.msg)
+                console.log(response)
             })
         },
         goToregister(){
