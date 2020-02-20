@@ -53,8 +53,8 @@ export default {
             this.$axios.post(apiPrefix.api + api.login, {
                 account: this.account,
                 password: this.password
-            }).then(()=>{
-                Message.success('请求成功')
+            }).then((response)=>{
+                Message.success(response.msg)
             })
         },
         goToregister(){

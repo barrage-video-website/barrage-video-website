@@ -50,8 +50,8 @@ export default {
                 account: this.account,
                 password: this.password,
                 nickname: this.nickname
-            }).then(()=>{
-                Message.success('请求成功')
+            }).then((response)=>{
+                Message.success(response.msg)
             })
         }
     }
