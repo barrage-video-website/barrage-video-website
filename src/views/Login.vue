@@ -56,7 +56,8 @@ export default {
                 account: this.account,
                 password: this.password
             }).then((response)=>{
-                console.log(response)
+                const token = response.data.data.token
+                tokenManager.setToken(token)
             })
         },
         goToregister(){

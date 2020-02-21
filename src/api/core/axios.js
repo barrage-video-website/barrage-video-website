@@ -7,6 +7,18 @@ axios.defaults.timeout = 10000
 
 axios.defaults.useToken = true
 
+// 添加请求拦截器处理
+axios.interceptors.request.use(config => {
+    // 在发送请求之前做些什么
+    if(tokenManager.hasToken() && axios.defaults.useToken){
+        config.headers.Authorization = 'bearer' + tokenManager.getToken()
+    }
+    return config
+}, error => {
+    // 对请求错误做些什么
+    return Promise.reject(error)
+})
+  
 // 添加响应(返回)拦截器处理
 export const defaultResponseInterceptor = axios.interceptors.response.use(response =>{
     const data = response.data
