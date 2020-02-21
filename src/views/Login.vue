@@ -58,6 +58,11 @@ export default {
             }).then((response)=>{
                 const token = response.data.data.token
                 tokenManager.setToken(token)
+                Message({
+                    message: response.data.msg,
+                    type: 'success',
+                    duration: 5 * 1000
+                })
             })
         },
         goToregister(){
