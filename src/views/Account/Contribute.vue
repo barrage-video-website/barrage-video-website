@@ -18,35 +18,38 @@
 </template>
 
 <script>
-// import api from '@/api'
-// import apiPrefix from '@/api/apiPrefix.js'
+import api from '@/api'
+import apiPrefix from '@/api/core/apiPrefix.js'
 import { Message } from 'element-ui'
 export default {
     name: 'Contribute',
     data() {
         return {
             file: '',
-            fileList: []
+            fileList: ''
         }
     },
     methods: {
         // 获取文件
         handlePreview(file) {
-            this.file = file
-            console.log(this.file)
-        }
+            this.file = file.raw
+        },
         // 上传
-        // submitUpload(){
-        //     const formData = new FormData()
-        //     formData.append('video_file', this.file)
-        //     this.$axios
-        //         .post(apiPrefix.api + api.upload, formData)
-        //         .then((response)=>{
-        //             Message.success('请求成功')
-        //             this.fileList = ''
-        //             this.leadAccounts = false
-        //         })
-        // }
+        submitUpload(){
+            const formData = new FormData()
+            formData.append('video', this.file)
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+            this.$axios
+                .post(apiPrefix.api + api.upload, formData, config)
+                .then((response)=>{
+                    Message.success('请求成功')
+                    this.file = ''
+                })
+        }
     }
 }
 
