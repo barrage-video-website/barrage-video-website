@@ -12,7 +12,7 @@
                 <div class="play-wrapp">
                     <div class="play-wrapp-top"></div>
                     <div class="play-wrapp-video">
-                        <video id="video" src="../videos/[拯救大兵瑞恩(国英双语)].Saving.Private.Ryan.1998.BluRay.720p.x264.AC3.2Audios-CMCT_Trim.mp4"></video>
+                        <video id="video" src="http://localhost/barrage-video-website-serve/public/TL3maUZt8bLS3TR1zgqnjMwMr8kHbB.mp4"></video>
                     </div>
                     <div class="player-video-buttom"></div>
                     <div class="player-pause" @click="pause()">

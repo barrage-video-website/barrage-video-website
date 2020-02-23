@@ -5,14 +5,25 @@
             class="upload-demo upload-btn"
             ref="upload"
             action="https://jsonplaceholder.typicode.com/posts/"
-            :on-change="handlePreview"
+            :on-change="handleVideo"
             :auto-upload="false"
             :file-list="fileList"
             :limit="1">
                 <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-                <el-button size="small" type="primary" @click="submitUpload">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">上传文件:</div>
+                <div slot="tip" class="el-upload__tip">上传视频:</div>
             </el-upload>
+            <el-upload
+            class="upload-demo upload-btn"
+            ref="upload"
+            action=""
+            :on-change="handleImg"
+            :auto-upload="false"
+            :file-list="fileList"
+            :limit="1">
+                <el-button slot="trigger" size="small" type="primary">选取封面</el-button>
+                <div slot="tip" class="el-upload__tip">上传封面:</div>
+            </el-upload>
+            <el-button size="small" type="primary" @click="submitUpload">点击上传</el-button>
       </div>
   </div>
 </template>
@@ -25,19 +36,26 @@ export default {
     name: 'Contribute',
     data() {
         return {
-            file: '',
-            fileList: ''
+            video: '',
+            fileList: [],
+            img: ''
         }
     },
     methods: {
         // 获取文件
-        handlePreview(file) {
-            this.file = file.raw
+        handleVideo(file) {
+            this.video = file.raw
+        },
+        // 获取文件
+        handleImg(file) {
+            this.img = file.raw
+            console.log(this.img)
         },
         // 上传
         submitUpload(){
             const formData = new FormData()
-            formData.append('video', this.file)
+            formData.append('video', this.video)
+            formData.append('img', this.img)
             const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -47,7 +65,7 @@ export default {
                 .post(apiPrefix.api + api.upload, formData, config)
                 .then((response)=>{
                     Message.success('请求成功')
-                    this.file = ''
+                    this.video = ''
                 })
         }
     }

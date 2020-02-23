@@ -36,9 +36,9 @@ const routes = [
     },
     {
         // 个人中心
-        path: '/account',
-        name: 'Account',
-        component: () => import('@/views/Account.vue'),
+        path: '/center',
+        name: 'Center',
+        component: () => import('@/views/Center.vue'),
         children: [
             {
                 // 投稿
