@@ -10,84 +10,14 @@
               <div class="exchange-btn"></div>
           </header>
           <div class="zone-list-box">
-              <div class="live-card" @click="gotoVideo">
+              <div class="live-card" @click="gotoVideo" v-for="cartoon in cartoons" :key="cartoon.videoId">
                     <div class="pi">
-                        <img src="../pictures/04afc06ba274fd46dff3555e1690b237a9b054d2.jpg@206w_116h_1c_100q.webp">
+                        <img :src="`http://localhost/barrage-video-website-serve/public/image/${cartoon.coverPath}`">
                     </div>
-                    <div class="title">【1080P/极致画质/FGO】绝对 臀部 战线巴比伦尼亚</div>
+                    <div class="title">{{cartoon.coverTitle}}</div>
                     <div class="up">
                         <div class="img"></div>
-                        空之轨迹
-                    </div>
-              </div>
-              <div class="live-card">
-                    <div class="pi">
-                        <img src="../pictures/04afc06ba274fd46dff3555e1690b237a9b054d2.jpg@206w_116h_1c_100q.webp">
-                    </div>
-                    <div class="title">【1080P/极致画质/FGO】绝对 臀部 战线巴比伦尼亚</div>
-                    <div class="up">
-                        <div class="img"></div>
-                        空之轨迹
-                    </div>
-              </div>
-              <div class="live-card">
-                    <div class="pi">
-                        <img src="../pictures/04afc06ba274fd46dff3555e1690b237a9b054d2.jpg@206w_116h_1c_100q.webp">
-                    </div>
-                    <div class="title">【1080P/极致画质/FGO】绝对 臀部 战线巴比伦尼亚</div>
-                    <div class="up">
-                        <div class="img"></div>
-                        空之轨迹
-                    </div>
-              </div>
-              <div class="live-card">
-                    <div class="pi">
-                        <img src="../pictures/04afc06ba274fd46dff3555e1690b237a9b054d2.jpg@206w_116h_1c_100q.webp">
-                    </div>
-                    <div class="title">【1080P/极致画质/FGO】绝对 臀部 战线巴比伦尼亚</div>
-                    <div class="up">
-                        <div class="img"></div>
-                        空之轨迹
-                    </div>
-              </div>
-              <div class="live-card">
-                    <div class="pi">
-                        <img src="../pictures/04afc06ba274fd46dff3555e1690b237a9b054d2.jpg@206w_116h_1c_100q.webp">
-                    </div>
-                    <div class="title">【1080P/极致画质/FGO】绝对 臀部 战线巴比伦尼亚</div>
-                    <div class="up">
-                        <div class="img"></div>
-                        空之轨迹
-                    </div>
-              </div>
-              <div class="live-card">
-                    <div class="pi">
-                        <img src="../pictures/04afc06ba274fd46dff3555e1690b237a9b054d2.jpg@206w_116h_1c_100q.webp">
-                    </div>
-                    <div class="title">【1080P/极致画质/FGO】绝对 臀部 战线巴比伦尼亚</div>
-                    <div class="up">
-                        <div class="img"></div>
-                        空之轨迹
-                    </div>
-              </div>
-              <div class="live-card">
-                    <div class="pi">
-                        <img src="../pictures/04afc06ba274fd46dff3555e1690b237a9b054d2.jpg@206w_116h_1c_100q.webp">
-                    </div>
-                    <div class="title">【1080P/极致画质/FGO】绝对 臀部 战线巴比伦尼亚</div>
-                    <div class="up">
-                        <div class="img"></div>
-                        空之轨迹
-                    </div>
-              </div>
-              <div class="live-card">
-                    <div class="pi">
-                        <img src="../pictures/04afc06ba274fd46dff3555e1690b237a9b054d2.jpg@206w_116h_1c_100q.webp">
-                    </div>
-                    <div class="title">【1080P/极致画质/FGO】绝对 臀部 战线巴比伦尼亚</div>
-                    <div class="up">
-                        <div class="img"></div>
-                        空之轨迹
+                        {{cartoon.userName}}
                     </div>
               </div>
           </div>
@@ -147,11 +77,49 @@
 </template>
 
 <script>
+import tokenManager from '@/api/core/tokenManager.js'
+import tokenPlayLoad from '@/api/core/tokenPlayLoad.js'
+import axios from '@/api/core/axios.js'
+import api from '@/api'
+import apiPrefix from '@/api/core/apiPrefix.js'
+import { Message } from 'element-ui'
 export default {
     name: 'cartoon',
+    data(){
+        return {
+            cartoons: [{
+                // 视频id
+                videoId: '',
+                // 封面路径
+                coverPath: '',
+                // 视频标题
+                coverTitle: '',
+                // 发表用户
+                userName: ''
+            }]
+        }
+    },
+    created(){
+        this.getCartoon(1)
+    },
     methods: {
         gotoVideo(){
             this.$router.push({ path: '/video/1' })
+        },
+        getCartoon(page){
+            axios.get(apiPrefix.api + api.getVideoList, {
+                params: {
+                    page
+                }
+            }).then(response => {
+                Message({
+                    message: response.data.msg,
+                    type: 'success',
+                    duration: 5 * 1000
+                })
+                this.cartoons = response.data.data.videolists
+                console.log(this.videolists)
+            })
         }
     }
 }
@@ -245,13 +213,18 @@ export default {
     .zone-list-box{
         width: 100%;
         height: 404px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
         .live-card{
+            display: inline-block;
             width: 206px;
             height: 190px;
+            margin-right: 10px;
+            margin-bottom: 24px;
+            &:nth-child(4n){
+            margin-right: 0;
+            }
+            &:nth-child(5,6,7,8){
+            margin-bottom: 0;
+            }
             .title{
                 font-size: 14px;
                 line-height: 20px;

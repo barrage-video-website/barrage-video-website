@@ -6,5 +6,7 @@ export default{
     // 上传
     upload: '/upload',
     // 注册
-    register: '/register'
+    register: '/register',
+    // 获取视频列表
+    getVideoList: '/getVideoList'
 }
