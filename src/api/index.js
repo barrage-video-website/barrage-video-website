@@ -8,5 +8,7 @@ export default{
     // 注册
     register: '/register',
     // 获取视频列表
-    getVideoList: '/getVideoList'
+    getVideoList: '/getVideoList',
+    // 获取视频信息
+    getVideo: '/getVideo'
 }

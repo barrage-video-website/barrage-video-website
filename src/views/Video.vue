@@ -2,17 +2,17 @@
   <div class="video">
     <bilil-header id="bilil-header"></bilil-header>
       <div class="video-main">
-          <div class="l-con">
+          <div class="l-con" >
                 <div class="video-info">
                     <div class="video-title">
                         <span class="activity">活动作品</span>
-                        <span>【1080P/极致画质/FGO】绝对 臀部 战线巴比伦尼亚</span>
+                        <span>{{this.videoTitle}}</span>
                     </div>
                 </div>
                 <div class="play-wrapp">
                     <div class="play-wrapp-top"></div>
                     <div class="play-wrapp-video">
-                        <video id="video" src="http://localhost/barrage-video-website-serve/public/TL3maUZt8bLS3TR1zgqnjMwMr8kHbB.mp4"></video>
+                        <video id="video" :src="`http://localhost/barrage-video-website-serve/public/video/${this.videoPath}`"></video>
                     </div>
                     <div class="player-video-buttom"></div>
                     <div class="player-pause" @click="pause()">
@@ -28,13 +28,49 @@
 </template>
 
 <script>
+import tokenManager from '@/api/core/tokenManager.js'
+import tokenPlayLoad from '@/api/core/tokenPlayLoad.js'
+import axios from '@/api/core/axios.js'
+import api from '@/api'
+import apiPrefix from '@/api/core/apiPrefix.js'
+import { Message } from 'element-ui'
 import bililHeader from '@/components/header.vue'
 export default {
     name: 'video',
     components: {
         bililHeader
     },
+    data(){
+        return{
+            coverPath: '',
+            userId: '',
+            videoPath: '',
+            videoTitle: ''
+        }
+    },
+    props: ['videoId'],
+    created(){
+        this.getVideo()
+    },
     methods: {
+        getVideo(){
+            axios.get(apiPrefix.api + api.getVideo, {
+                params: {
+                    videoId: this.videoId
+                }
+            }).then(response => {
+                Message({
+                    message: response.data.msg,
+                    type: 'success',
+                    duration: 5 * 1000
+                })
+                const video = response.data.data.video
+                this.coverPath = video.coverPath
+                this.userId = video.userId
+                this.videoPath = video.videoPath
+                this.videoTitle = video.videoTitle
+            })
+        },
         pause(){
             const myVid = document.getElementById('video')
             if(myVid.paused){
@@ -96,7 +132,8 @@ export default {
         }
         .play-wrapp-video{
             video{
-                max-width: 964px;
+                width: 964px;
+                height: 100%;
             }
 
         }

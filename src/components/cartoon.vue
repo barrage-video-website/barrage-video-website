@@ -10,7 +10,7 @@
               <div class="exchange-btn"></div>
           </header>
           <div class="zone-list-box">
-              <div class="live-card" @click="gotoVideo" v-for="cartoon in cartoons" :key="cartoon.videoId">
+              <div class="live-card" @click="gotoVideo(cartoon.videoId)" v-for="cartoon in cartoons" :key="cartoon.videoId">
                     <div class="pi">
                         <img :src="`http://localhost/barrage-video-website-serve/public/image/${cartoon.coverPath}`">
                     </div>
@@ -103,8 +103,8 @@ export default {
         this.getCartoon(1)
     },
     methods: {
-        gotoVideo(){
-            this.$router.push({ path: '/video/1' })
+        gotoVideo(videoId){
+            this.$router.push({ name: 'Video', params: { videoId } })
         },
         getCartoon(page){
             axios.get(apiPrefix.api + api.getVideoList, {

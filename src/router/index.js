@@ -32,6 +32,7 @@ const routes = [
         // 播放video
         path: '/video/:videoId',
         name: 'Video',
+        props: true,
         component: () => import('@/views/Video.vue')
     },
     {
