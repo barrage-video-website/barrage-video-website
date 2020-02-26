@@ -172,7 +172,7 @@ export default {
         .play-wrapp-video{
             video{
                 width: 964px;
-                height: 100%;
+                height: 614px;
             }
 
         }
@@ -207,25 +207,27 @@ export default {
     }
     .player-video-buttom{
         width: 100%;
-        height: 94px;
-        position: relative;
+        height: 50px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
         box-sizing: border-box;
         padding: 0 12px;
-        .player-video-control-top{
-            transition:  opacity .2s ease-in;
-            opacity: 1;
-            height: 16px;
-            .play-video-progress{
-                width: 0;
-                height: 4px !important;
-                transition: all .5;
-                background: hsla(0,0%,100%,.2);
-                .bui-track{
-                    width: 940px;
-                    background: hsla(0,0%,100%,.3);
-                    height: 4px ;
+            .player-video-control-top{
+                transition:  opacity .2s ease-in;
+                opacity: 1;
+                height: 16px;
+                .play-video-progress{
+                    width: 0;
+                    height: 4px !important;
+                    transition: all .5;
+                    background: hsla(0,0%,100%,.2);
+                    .bui-track{
+                        width: 940px;
+                        background: hsla(0,0%,100%,.3);
+                        height: 4px ;
+                    }
                 }
             }
-        }
     }
 </style>
