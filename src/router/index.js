@@ -28,6 +28,7 @@ const routes = [
         name: 'Register',
         component: () => import('@/views/Register.vue')
     },
+    // 播放视频页面
     {
         // 播放video
         path: '/video/:videoId',
@@ -35,6 +36,15 @@ const routes = [
         props: true,
         component: () => import('@/views/Video.vue')
     },
+    // 直播页面
+    {
+        // 播放video
+        path: '/livebradcast/',
+        name: 'Livebroadcast',
+        props: true,
+        component: () => import('@/views/Livebroadcast.vue')
+    },
+    // 个人中心
     {
         // 个人中心
         path: '/center',

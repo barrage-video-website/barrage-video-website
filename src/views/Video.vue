@@ -12,9 +12,16 @@
                 <div class="play-wrapp">
                     <div class="play-wrapp-top"></div>
                     <div class="play-wrapp-video">
-                        <video id="video" :src="`http://localhost/barrage-video-website-serve/public/video/${this.videoPath}`"></video>
+                        <video  ref="video" id="video" :src="`http://localhost/barrage-video-website-serve/public/video/${this.videoPath}`"></video>
                     </div>
-                    <div class="player-video-buttom"></div>
+                    <div class="player-video-buttom">
+                        <div class="player-video-control-top">
+                            <!-- 进度条 -->
+                            <div class="play-video-progress" id="play-video-progress" ref="playVideoProgress" @mousedown="videoSeek" v-bind:style="{width:percent + '%'}">
+                                <div class="bui-track" id="bui-track"  ref="buiTrack" ></div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="player-pause" @click="pause()">
                         <div class="player-sig-container">
                             <div class="player-sig"></div>
@@ -45,12 +52,25 @@ export default {
             coverPath: '',
             userId: '',
             videoPath: '',
-            videoTitle: ''
+            videoTitle: '',
+            percent: this.percentProeecss,
+            duration: 0,
+            currentTime: 0
         }
     },
     props: ['videoId'],
-    created(){
+    mounted(){
         this.getVideo()
+    },
+    computed: {
+        percentProeecss(){
+            return (this.currentTime / this.duration) * 100
+        }
+    },
+    watch: {
+        percentProeecss (cur, old){
+            this.percent = cur
+        }
     },
     methods: {
         getVideo(){
@@ -71,13 +91,32 @@ export default {
                 this.videoTitle = video.videoTitle
             })
         },
+        changVideoTime(currentTime = 0){
+            this.currentTime = currentTime
+            // 60帧数
+            setInterval(()=>{
+                this.currentTime = this.$refs.video.currentTime
+            }, 1000 / 60)
+        },
         pause(){
-            const myVid = document.getElementById('video')
+            const myVid = this.$refs.video
             if(myVid.paused){
                 myVid.play()
+                this.duration = this.$refs.video.duration
+                this.changVideoTime()
             }else{
                 myVid.pause()
             }
+        },
+        videoSeek(e){
+            var video = this.$refs.video
+            var progress = this.$refs.playVideoProgress
+            var buiTrack = this.$refs.buiTrack
+            var length = e.clientX - progress.offsetLeft
+            var percent = length / buiTrack.offsetWidth
+            video.currentTime = percent * video.duration
+            this.percent = percent * 100
+            this.changVideoTime()
         }
     }
 }
@@ -163,6 +202,29 @@ export default {
                 border-bottom: 20px solid transparent;
                 border-left: 20px solid black;
 
+            }
+        }
+    }
+    .player-video-buttom{
+        width: 100%;
+        height: 94px;
+        position: relative;
+        box-sizing: border-box;
+        padding: 0 12px;
+        .player-video-control-top{
+            transition:  opacity .2s ease-in;
+            opacity: 1;
+            height: 16px;
+            .play-video-progress{
+                width: 0;
+                height: 4px !important;
+                transition: all .5;
+                background: hsla(0,0%,100%,.2);
+                .bui-track{
+                    width: 940px;
+                    background: hsla(0,0%,100%,.3);
+                    height: 4px ;
+                }
             }
         }
     }
