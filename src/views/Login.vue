@@ -51,10 +51,6 @@ export default {
             password: ''
         }
     },
-    created(){
-        const i = tokenPlayLoad.getUserId()
-        console.log(i)
-    },
     methods: {
         login(){
             axios.post(apiPrefix.api + api.login, {

@@ -118,7 +118,6 @@ export default {
                     duration: 5 * 1000
                 })
                 this.cartoons = response.data.data.videolists
-                console.log(this.videolists)
             })
         }
     }

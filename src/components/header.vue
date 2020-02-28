@@ -2,46 +2,74 @@
   <div class="header">
       <div class="nav-wrapper-left">
           <ul class="nav-con-ul">
-              <li class="nav-item">
-                  <div class="title">主页</div>
+              <nav-item>
+                <template v-slot:img>
                     <div id="background"></div>
-              </li>
-                <li class="nav-item">
-                  <div class="title">游戏中心</div>
-              </li>
-                <li class="nav-item">
-                  <div class="title">直播</div>
-              </li>
-                <li class="nav-item">
-                  <div class="title">会员购</div>
-              </li>
-                <li class="nav-item">
-                  <div class="title">漫画</div>
-              </li>
-                <li class="nav-item">
-                  <div class="title">赛事</div>
-              </li>
-                <li class="nav-item">
-                  <div class="title">BML</div>
-              </li>
-
+                </template>
+                <template v-slot:title>
+                    主页
+                </template>
+              </nav-item>
+              <nav-item>
+                <template v-slot:title>
+                    游戏中心
+                </template>
+              </nav-item>
+                <nav-item>
+                    <template v-slot:title>
+                        直播
+                    </template>
+                </nav-item>
+                <nav-item>
+                    <template v-slot:title>
+                        会员购
+                    </template>
+                </nav-item>
+                <nav-item>
+                    <template v-slot:title>
+                        漫画
+                    </template>
+                </nav-item>
+                <nav-item>
+                    <template v-slot:title>
+                        赛事
+                    </template>
+                </nav-item>
+                <nav-item>
+                    <template v-slot:title>
+                        BML
+                    </template>
+                </nav-item>
           </ul>
       </div>
       <div class="nav-wrapper-right">
-              <ul class="nav-con-ul">
-
-                    <li class="nav-item" v-if="!islogin">
-                        <div class="title">登录</div>
-                    </li>
-                    <li class="nav-item contribute"  >
-                        <div class="title" @click="goToContribute">投稿</div>
-                    </li>
-                    <li class="nav-item register"  v-if="!islogin">
-                        <div class="title">注册</div>
-                    </li>
-                    <li class="nav-item"  v-if="islogin">
-                        <img :src="`http://localhost/barrage-video-website-serve/public/${headPhotoUrl}`" alt="头像">
-                    </li>
+                <ul class="nav-con-ul">
+                    <div v-if="!islogin">
+                        <nav-item>
+                            <template v-slot:title>
+                                <div>登录</div>
+                            </template>
+                        </nav-item>
+                    </div>
+                    <nav-item>
+                        <template v-slot:title >
+                            <div @click="goToContribute">投稿</div>
+                        </template>
+                    </nav-item>
+                    <div v-if="!islogin">
+                        <nav-item>
+                            <template v-slot:title >
+                                <div  class="register">注册</div>
+                            </template>
+                        </nav-item>
+                    </div>
+                    <div v-if="islogin">
+                        <nav-item>
+                            <template v-slot:title >
+                                <img :src="`http://localhost/barrage-video-website-serve/public/${headPhotoUrl}`" alt="头像" class="head-photo">
+                            </template>
+                        </nav-item>
+                    </div>
                     <li class="nav-item user" v-if="islogin">
                         <el-dropdown @command="handleCommand">
                         <span class="el-dropdown-link">
@@ -60,6 +88,7 @@
 </template>
 
 <script>
+import navItem from '@/components/header/nav-item.vue'
 import tokenManager from '@/api/core/tokenManager.js'
 import tokenPlayLoad from '@/api/core/tokenPlayLoad.js'
 import axios from '@/api/core/axios.js'
@@ -68,6 +97,9 @@ import apiPrefix from '@/api/core/apiPrefix.js'
 import { Message } from 'element-ui'
 export default {
     name: 'HearderNavitation',
+    components: {
+        navItem
+    },
     data(){
         return {
             islogin: false,
@@ -80,7 +112,7 @@ export default {
     },
     methods: {
         goToContribute() {
-            this.$router.push({ name: 'Account' })
+            this.$router.push({ name: 'Center' })
         },
         haslogin(){
             // 是否登录了
@@ -119,6 +151,7 @@ export default {
         display: flex;
         justify-content: space-between;
         margin: 0 auto;
+        height: 56px !important;
     }
     .nav-wrapper-right{
         float: right;
@@ -127,48 +160,6 @@ export default {
         position: relative;
         display: flex;
         list-style: none;
-        .nav-item{
-            cursor: pointer;
-            padding-left: 12px;
-            float: left;
-            text-align: center;
-            line-height: 14px;
-            height: 14px;
-            position: relative;
-            white-space: nowrap;
-            img{
-                width: 26px;
-                height: 26px;
-            }
-            .title{
-                font-size: 14px;
-                color:#222;
-                height: 100%;
-                padding: 0 7px;
-                padding-left: 20px;
-            }
-            #background{
-                background-image: url('../pictures/icons.png');
-                background-position-x: -80px;
-                background-position-y: -210px;
-                width: 41px;
-                height: 36px;
-                position: absolute;
-                left: -1px;
-                top: -4px;
-                columns: #00a1d0;
-            }
-            #background-ceter{
-                left: -1px;
-                top: 0;
-                position: absolute;
-                width: 41px;
-                height: 36px;
-                background-image: url('../pictures/icons.png');
-                background-position-x: -80px;
-                background-position-y: -1240px;
-            }
-        }
     }
     #create-centre{
         border-radius: 5px;
@@ -178,5 +169,19 @@ export default {
     .register,.user{
         margin-right: 40px;
     }
-
+    #background{
+        position: absolute;
+        left: -24px;
+        top: -18px;
+        background-image: url('../pictures/icons.png');
+        background-position-x: -80px;
+        background-position-y: -210px;
+        width: 30px;
+        height: 30px;
+    }
+    .head-photo{
+        width: 20px;
+        height: 20px;
+        border-radius: 20px;
+    }
 </style>
