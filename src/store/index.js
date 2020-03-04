@@ -5,9 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        count: 1
+        cartoons: ''
     },
     mutations: {
+        setCartoons(state, cartoons){
+            state.cartoons = cartoons
+        }
     },
     actions: {
     },
