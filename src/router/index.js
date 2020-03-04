@@ -33,7 +33,7 @@ const routes = [
     // 直播页面
     {
         // 播放video
-        path: '/livebradcast/',
+        path: '/livebradcast/:liveId',
         name: 'Livebroadcast',
         props: true,
         component: () => import('@/views/Livebroadcast.vue')

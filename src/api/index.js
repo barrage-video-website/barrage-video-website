@@ -7,8 +7,10 @@ export default{
     upload: '/upload',
     // 注册
     register: '/register',
-    // 获取视频列表
+    // 获取动画区
     getVideoList: '/getVideoList',
+    // 获取直播区
+    getLiveList: '/getLiveList',
     // 获取视频信息
     getVideo: '/getVideo'
 }

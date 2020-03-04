@@ -1,13 +1,13 @@
 <template>
     <div class="zone-list-box">
-        <div class="live-card" @click="gotoVideo(cartoon.videoId)" v-for="cartoon in cartoons" :key="cartoon.videoId">
+        <div class="live-card" @click="gotoVideo(list.id,list.type)" v-for="list in lists" :key="list.id">
             <div class="pi">
-                <img :src="`http://localhost/barrage-video-website-serve/public/image/${cartoon.coverPath}`">
+                <img :src="`http://localhost/barrage-video-website-serve/public/${list.coverPath}`">
             </div>
-            <div class="title">{{cartoon.coverTitle}}</div>
+            <div class="title">{{list.coverTitle}}</div>
             <div class="up">
                 <div class="img"></div>
-                {{cartoon.userName}}
+                {{list.userName}}
             </div>
         </div>
     </div>
@@ -17,11 +17,18 @@
 export default {
     name: 'zoneListBox',
     props: {
-        cartoons: Array
+        lists: Array
     },
     methods: {
-        gotoVideo(videoId){
-            this.$router.push({ name: 'Video', params: { videoId } })
+        gotoVideo(id, type){
+            switch(type){
+                case 'live' :
+                    this.$router.push({ name: 'Livebroadcast', params: { liveId: id } })
+                    break
+                case 'video' :
+                    this.$router.push({ name: 'Video', params: { videoId: id } })
+                    break
+            }
         }
     }
 }

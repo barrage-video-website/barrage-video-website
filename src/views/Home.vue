@@ -18,13 +18,32 @@
                                     <div class="cartoon-head-img"></div>
                             </template>
                             <template v-slot:head-title >
-                                    动画
+                                    直播
                             </template>
                     </cartoon-head>
                     <!-- 动画列表 -->
-                    <cartoon-list v-bind:cartoons="cartoons">
-                    </cartoon-list>
 
+                    <cartoon-list v-bind:lists="lives">
+                    </cartoon-list>
+                </div>
+                    <!-- 排行榜
+                    <cartoon-rank-list >
+                    </cartoon-rank-list> -->
+            </div>
+            <div class="cartoon">
+                <div class="live-list">
+                    <!-- 标题 -->
+                    <cartoon-head>
+                            <template v-slot:head-img >
+                                    <div class="cartoon-head-img"></div>
+                            </template>
+                            <template v-slot:head-title >
+                                    动画
+                            </template>
+                    </cartoon-head>
+
+                    <cartoon-list v-bind:lists="cartoons">
+                    </cartoon-list>
                 </div>
                     <!-- 排行榜 -->
                     <cartoon-rank-list >
@@ -55,11 +74,12 @@ export default {
     },
     created(){
         this.getCartoon(1)
-        this.cartoons = this.setC
+        this.getlive(1)
     },
     data(){
         return{
-            cartoons: []
+            cartoons: [],
+            lives: []
         }
     },
     methods: {
@@ -76,6 +96,20 @@ export default {
                 })
                 this.cartoons = response.data.data.videolists
             })
+        },
+        getlive(page){
+            axios.get(apiPrefix.api + api.getLiveList, {
+                params: {
+                    page
+                }
+            }).then(response => {
+                Message({
+                    message: response.data.msg,
+                    type: 'success',
+                    duration: 5 * 1000
+                })
+                this.lives = response.data.data.LiveLists
+            })
         }
     }
 }
@@ -90,6 +124,7 @@ ul{
     list-style-type : none;
 }
     .homg{
+        width: 100%;
         height: 100%;
     }
     main{
@@ -113,6 +148,7 @@ ul{
     .head-banner{
         z-index: 1;
         float: left;
+        overflow: hidden;
     }
     .guanggao{
         width: 1200px;
@@ -122,6 +158,7 @@ ul{
         width: 100%;
         height: 456px;
         margin-top: 40px;
+        margin-bottom: 40px;
     }
     .live-list{
         width: 854px !important;

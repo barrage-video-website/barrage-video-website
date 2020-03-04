@@ -91,6 +91,7 @@ export default {
     props: ['videoId'],
     mounted(){
         this.getVideo()
+        console.log(this.id)
     },
     computed: {
         percentProeecss(){
