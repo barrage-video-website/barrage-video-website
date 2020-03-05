@@ -62,7 +62,6 @@ import cartoonRankList from '@/components/cartoon/rankList.vue'
 import axios from '@/api/core/axios.js'
 import api from '@/api'
 import apiPrefix from '@/api/core/apiPrefix.js'
-import { Message } from 'element-ui'
 export default {
     name: 'Home',
     components: {
@@ -89,11 +88,6 @@ export default {
                     page
                 }
             }).then(response => {
-                Message({
-                    message: response.data.msg,
-                    type: 'success',
-                    duration: 5 * 1000
-                })
                 this.cartoons = response.data.data.videolists
             })
         },
@@ -103,11 +97,6 @@ export default {
                     page
                 }
             }).then(response => {
-                Message({
-                    message: response.data.msg,
-                    type: 'success',
-                    duration: 5 * 1000
-                })
                 this.lives = response.data.data.LiveLists
             })
         }

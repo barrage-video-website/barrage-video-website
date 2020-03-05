@@ -67,7 +67,6 @@
 import axios from '@/api/core/axios.js'
 import api from '@/api'
 import apiPrefix from '@/api/core/apiPrefix.js'
-import { Message } from 'element-ui'
 import bililHeader from '@/components/header.vue'
 export default {
     name: 'videoLayout',
@@ -89,7 +88,6 @@ export default {
     props: ['videoId'],
     mounted(){
         this.getVideo()
-        console.log(this.id)
     },
     computed: {
         percentProeecss(){
@@ -136,11 +134,6 @@ export default {
                     videoId: this.videoId
                 }
             }).then(response => {
-                Message({
-                    message: response.data.msg,
-                    type: 'success',
-                    duration: 5 * 1000
-                })
                 const video = response.data.data.video
                 this.coverPath = video.coverPath
                 this.userId = video.userId

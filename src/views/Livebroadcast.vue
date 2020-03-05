@@ -12,7 +12,7 @@
                 <div class="play-wrapp">
                     <div class="play-wrapp-top"></div>
                     <div class="play-wrapp-video">
-                        <video id="video"></video>
+                        <video id="video" ref="video"></video>
                     </div>
                     <!-- 低层 -->
                     <div class="player-video-buttom">
@@ -58,7 +58,10 @@ export default {
         bililHeader
     },
     mounted(){
-        this.load()
+        // this.load()
+        setTimeout(()=>{
+            this.load()
+        }, 2000)
     },
     methods: {
         load(){
