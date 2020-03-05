@@ -10,53 +10,87 @@
                     </div>
                 </div>
                 <!-- 左边整个页面 -->
-                <div class="play-wrapp">
+                <div class="bililbili-left">
+                    <div class="play-wrapp ">
                     <!-- 头部 -->
-                    <div class="play-wrapp-top"></div>
-                    <!-- 播放器 -->
-                    <div class="play-wrapp-video" @click="pause()">
-                        <video  ref="video"  :src="`http://localhost/barrage-video-website-serve/public/video/${this.videoPath}`"></video>
-                    </div>
-                    <!-- 低层 -->
-                    <div class="player-video-buttom">
-                        <div class="player-video-control-top" @mousedown="videoSeek">
-                            <!-- 进度条 -->
-                            <div class="play-video-progress" id="play-video-progress" ref="playVideoProgress"  v-bind:style="{width:percent + '%'}">
-                                <div class="bui-track" id="bui-track"  ref="buiTrack" ></div>
-                            </div>
+                        <div class="play-wrapp-top"></div>
+                        <!-- 播放器 -->
+                        <div class="play-wrapp-video" @click="pause()">
+                            <video  ref="video"  :src="`http://localhost/barrage-video-website-serve/public/video/${this.videoPath}`"></video>
                         </div>
-                        <!-- 进度条底下控件 -->
-                        <div class="player-video-control-main">
-                            <!-- 播放暂停,记录当前时间,总时间 -->
-                            <div class="buttom-left">
-                                <div class="video-pause"></div>
-                                <div class="video-time">
-                                    <!-- new Date(endDate ) -->
-                                    <span>{{this.comThisCurrentTime}}</span>
-                                    <span>/</span>
-                                    <span>{{this.comThisDurationTime}}</span>
+                        <!-- 低层 -->
+                        <div class="player-video-buttom">
+                            <div class="player-video-control-top" @mousedown="videoSeek">
+                                <!-- 进度条 -->
+                                <div class="play-video-progress" id="play-video-progress" ref="playVideoProgress"  v-bind:style="{width:percent + '%'}">
+                                    <div class="bui-track" id="bui-track"  ref="buiTrack" ></div>
                                 </div>
                             </div>
-                            <div class="buttom-right">
-                                <div class="buttom-music button-container" title="音量">
-                                    <div class="music-progress-container">
-                                        <div class="music-num">{{this.musicPercent}}</div>
-                                        <div class="music-progress-wrap" @mousedown="musicSeek" ref="musicProgressWrap">
-                                            <div class="music-progress" ref="musicProgress" v-bind:style="{height:musicPercent + '%'}"></div>
-                                        </div>
+                            <!-- 进度条底下控件 -->
+                            <div class="player-video-control-main">
+                                <!-- 播放暂停,记录当前时间,总时间 -->
+                                <div class="buttom-left">
+                                    <div class="video-pause"></div>
+                                    <div class="video-time">
+                                        <!-- new Date(endDate ) -->
+                                        <span>{{this.comThisCurrentTime}}</span>
+                                        <span>/</span>
+                                        <span>{{this.comThisDurationTime}}</span>
                                     </div>
                                 </div>
+                                <div class="buttom-right">
+                                    <div class="buttom-music button-container" title="音量">
+                                        <div class="music-progress-container">
+                                            <div class="music-num">{{this.musicPercent}}</div>
+                                            <div class="music-progress-wrap" @mousedown="musicSeek" ref="musicProgressWrap">
+                                                <div class="music-progress" ref="musicProgress" v-bind:style="{height:musicPercent + '%'}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <div class="button-container" >自动</div>
                                 <div class="buttom-full-screen button-container" title="全屏" @click="fullscreen"></div>
                             </div>
                         </div>
                     </div>
+                    <!-- 暂停按钮 -->
                     <div class="player-pause" @click="pause()">
                         <div class="player-sig-container">
                             <div class="player-sig"></div>
                         </div>
                     </div>
+                    <!-- 暂停按钮完 -->
+                    </div>
+                    <!-- 播放器完 -->
+
+                    <!-- 弹幕 -->
+                    <div class="barrage-container">
+                        <div class="barrage-left">
+                            <div class="info-people">
+                                <span class="number">214</span>
+                                <span>正在看,</span>
+                            </div>
+                            <div class="info-barrage">
+                                <span >511</span>
+                                <span>实时弹幕</span>
+                            </div>
+                        </div>
+                        <div class="barrage-right">
+                            <!-- 是否打开弹幕按钮 -->
+                            <el-switch
+                            v-model="color"
+                            active-color="#00a1d6"
+                            inactive-color="#757575">
+                            </el-switch>
+                            <div class="barrage-input-wrap" >
+                                <input class="barrage-input" placeholder="发送弹幕互动一下吧">
+                            </div>
+                            <div class="barrage-input-button">
+                                发送
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
           </div>
           <div class="r-con"></div>
       </div>
@@ -82,7 +116,9 @@ export default {
             percent: this.percentProeecss,
             musicPercent: 100,
             duration: 0,
-            currentTime: 0
+            currentTime: 0,
+            color: false,
+            barrageInput: ''
         }
     },
     props: ['videoId'],
@@ -193,6 +229,9 @@ export default {
 </script>
 
 <style lang="less">
+*{
+    font-size: 14px;
+}
     #bilil-header{
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
     }
@@ -232,7 +271,6 @@ export default {
     }
     .play-wrapp{
         width: 100%;
-        height: 676px;
         background: black;
         position: relative;
         .play-wrapp-top{
@@ -240,10 +278,11 @@ export default {
             height: 48px;
         }
         .play-wrapp-video{
+            position: relative;
             cursor: pointer;
             video{
                 width: 964px;
-                height: 614px;
+                height: 550px;
             }
 
         }
@@ -279,9 +318,6 @@ export default {
     .player-video-buttom{
         width: 100%;
         height: 50px;
-        position: absolute;
-        left: 0;
-        bottom: 0;
         box-sizing: border-box;
         padding: 0 12px;
             .player-video-control-top{
@@ -385,6 +421,63 @@ export default {
                         width: 100%;
                         background:blue;
                     }
+                }
+            }
+        }
+    }
+    // 弹幕
+    .barrage-container{
+        width: 100%;
+        height: 46px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+        display: flex;
+        align-items: center;
+        float: left;
+        padding: 0 12px 0 20px;
+        .barrage-left{
+            width: 242px;
+            float: left;
+            display: flex;
+            margin-right: 20px;
+            .info-people{
+                margin-right: 20px;
+                .number{
+                    height: 14px;
+                    line-height: 14px;
+                    font-size: 14px;
+                    font-weight: 600;
+                    margin-right: 6px;
+                }
+            }
+        }
+        .barrage-right{
+            display: flex;
+            align-items: center;
+            height: 30px;
+            width: 100%;
+            .barrage-input-button{
+                width: 60px;
+                height: 100%;
+                background: #00a1d6;
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+            .barrage-input-wrap{
+                color: rgb(153, 153, 153);
+                margin-left: 10px;
+                background: #eee;
+                height: 100%;
+                width: 100%;
+                padding:  4px  16px;
+                .barrage-input{
+                    width: 100%;
+                    border: 0;  // 去除未选中状态边框
+                    outline: none; // 去除选中状态边框
+                    background-color: rgba(0, 0, 0, 0);// 透明背景
                 }
             }
         }
