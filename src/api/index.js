@@ -8,9 +8,11 @@ export default{
     // 注册
     register: '/register',
     // 获取动画区
-    getVideoList: '/getVideoList',
+    getVideoList: '/get-video-list',
     // 获取直播区
-    getLiveList: '/getLiveList',
+    getLiveList: '/get-live-list',
     // 获取视频信息
-    getVideo: '/getVideo'
+    getVideo: '/get-video',
+    // 发送弹幕接口
+    sentBarrage: '/sent-barrage'
 }

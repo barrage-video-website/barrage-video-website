@@ -82,9 +82,9 @@
                             inactive-color="#757575">
                             </el-switch>
                             <div class="barrage-input-wrap" >
-                                <input class="barrage-input" placeholder="发送弹幕互动一下吧">
+                                <input class="barrage-input" placeholder="发送弹幕互动一下吧" v-model="barrageContent">
                             </div>
-                            <div class="barrage-input-button">
+                            <div class="barrage-input-button" @click="sentBarrage">
                                 发送
                             </div>
                         </div>
@@ -118,7 +118,7 @@ export default {
             duration: 0,
             currentTime: 0,
             color: false,
-            barrageInput: ''
+            barrageContent: ''
         }
     },
     props: ['videoId'],
@@ -164,6 +164,15 @@ export default {
         }
     },
     methods: {
+        sentBarrage(){
+            axios.post(apiPrefix.api + api.sentBarrage, {
+                videoId: this.videoId,
+                barrage: this.barrageContent
+            }).then(response => {
+                console.log(response)
+            })
+        },
+        // 获取
         getVideo(){
             axios.get(apiPrefix.api + api.getVideo, {
                 params: {
@@ -177,6 +186,7 @@ export default {
                 this.videoTitle = video.videoTitle
             })
         },
+        // 改变时间
         changVideoTime(currentTime = 0){
             if(currentTime !== 0){
                 this.currentTime = currentTime

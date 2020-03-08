@@ -1,4 +1,5 @@
 module.exports = {
+    publicPath: '/dist',
     devServer: {
         proxy: {
             [process.env.VUE_APP_API_URL_PREFIX]: {
