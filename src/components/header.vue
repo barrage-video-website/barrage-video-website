@@ -47,7 +47,7 @@
                     <div v-if="!islogin">
                         <nav-item>
                             <template v-slot:title>
-                                <div>登录</div>
+                                <div @click="goTologin">登录</div>
                             </template>
                         </nav-item>
                     </div>
@@ -59,7 +59,7 @@
                     <div v-if="!islogin">
                         <nav-item>
                             <template v-slot:title >
-                                <div  class="register">注册</div>
+                                <div  class="register" @click="goToRegister">注册</div>
                             </template>
                         </nav-item>
                     </div>
@@ -111,6 +111,12 @@ export default {
         this.haslogin()
     },
     methods: {
+        goToRegister(){
+            this.$router.push({ name: 'Register' })
+        },
+        goTologin(){
+            this.$router.push({ name: 'Login' })
+        },
         goToContribute() {
             this.$router.push({ name: 'Center' })
         },
