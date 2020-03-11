@@ -124,6 +124,23 @@ export default {
     props: ['videoId'],
     mounted(){
         this.getVideo()
+        var wsServer = 'ws://127.0.0.1:9502'
+        var websocket = new WebSocket(wsServer)
+        websocket.onopen = function (evt) {
+            console.log('连接websocket成功')
+        }
+
+        websocket.onclose = function (evt) {
+            console.log('关闭websocket连接')
+        }
+
+        websocket.onmessage = function (evt) {
+            console.log(evt)
+        }
+
+        websocket.onerror = function (evt, e) {
+            console.log('错误信息: ' + evt.data)
+        }
     },
     computed: {
         percentProeecss(){
@@ -167,7 +184,8 @@ export default {
         sentBarrage(){
             axios.post(apiPrefix.api + api.sentBarrage, {
                 videoId: this.videoId,
-                barrage: this.barrageContent
+                barrage: this.barrageContent,
+                currentTime: this.currentTime
             }).then(response => {
                 console.log(response)
             })
