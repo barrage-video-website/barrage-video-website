@@ -14,5 +14,6 @@ export default{
     // 获取视频信息
     getVideo: '/get-video',
     // 发送弹幕接口
-    sentBarrage: '/sent-barrage'
+    sentBarrage: '/sent-barrage',
+    deleteBarrage: '/delete-barrage'
 }

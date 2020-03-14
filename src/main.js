@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import flvjs from 'flv.js'
-
+import { vueBaberrage } from 'vue-baberrage'
+Vue.use(vueBaberrage)
 Vue.use(flvjs)
 Vue.use(ElementUI)
 library.add(...Object.values(FaIcons))

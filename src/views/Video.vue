@@ -13,6 +13,15 @@
                 <div class="bililbili-left">
                     <div class="play-wrapp ">
                     <!-- 头部 -->
+
+            <vue-baberrage
+                    :isShow = "barrageIsShow"
+                    :barrageList = "barrageList"
+                    :loop = "barrageLoop"
+                    :maxWordCount = "60"
+            >
+            </vue-baberrage>
+                                        
                         <div class="play-wrapp-top"></div>
                         <!-- 播放器 -->
                         <div class="play-wrapp-video" @click="pause()">
@@ -61,8 +70,7 @@
                     <!-- 暂停按钮完 -->
                     </div>
                     <!-- 播放器完 -->
-
-                    <!-- 弹幕 -->
+                    <!-- 底部 -->
                     <div class="barrage-container">
                         <div class="barrage-left">
                             <div class="info-people">
@@ -87,6 +95,9 @@
                             <div class="barrage-input-button" @click="sentBarrage">
                                 发送
                             </div>
+                            <div class="barrage-input-button" @click="addToList">
+                                add
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,6 +109,7 @@
 </template>
 
 <script>
+import { MESSAGE_TYPE } from 'vue-baberrage'
 import axios from '@/api/core/axios.js'
 import api from '@/api'
 import apiPrefix from '@/api/core/apiPrefix.js'
@@ -118,29 +130,22 @@ export default {
             duration: 0,
             currentTime: 0,
             color: false,
-            barrageContent: ''
+            barrageContent: '你好',
+            websocket: '',
+            currentId: 0,
+            position: 'top',
+            barrageIsShow: true,
+            barrageLoop: false,
+            barrageList: [],
+            text: '12354325'
         }
     },
     props: ['videoId'],
     mounted(){
         this.getVideo()
-        var wsServer = 'ws://127.0.0.1:9502'
-        var websocket = new WebSocket(wsServer)
-        websocket.onopen = function (evt) {
-            console.log('连接websocket成功')
-        }
-
-        websocket.onclose = function (evt) {
-            console.log('关闭websocket连接')
-        }
-
-        websocket.onmessage = function (evt) {
-            console.log(evt)
-        }
-
-        websocket.onerror = function (evt, e) {
-            console.log('错误信息: ' + evt.data)
-        }
+    },
+    destroyed(){
+        this.websocket.close()
     },
     computed: {
         percentProeecss(){
@@ -178,17 +183,36 @@ export default {
     watch: {
         percentProeecss (cur, old){
             this.percent = cur
+        },
+        text(cur, old){
+            console.log(this.text)
+            // this.text = cur
         }
     },
     methods: {
+        addToList () {
+            this.barrageList.push({
+                id: ++this.currentId,
+                msg: this.barrageContent,
+                time: 10,
+                type: MESSAGE_TYPE.NORMAL
+            })
+        },
+        deleteBarrage(){
+            axios.post(apiPrefix.api + api.deleteBarrage, {
+            }).then(response => {
+                console.log('删除成功')
+            })
+        },
         sentBarrage(){
             axios.post(apiPrefix.api + api.sentBarrage, {
                 videoId: this.videoId,
                 barrage: this.barrageContent,
                 currentTime: this.currentTime
             }).then(response => {
-                console.log(response)
+
             })
+            this.websocket.send('哈哈哈')
         },
         // 获取
         getVideo(){
@@ -209,11 +233,10 @@ export default {
             if(currentTime !== 0){
                 this.currentTime = currentTime
             }
-
-            // 60帧数
-            setInterval(()=>{
-                this.currentTime = this.$refs.video.currentTime
-            }, 1000 / 60)
+            const video = this.$refs.video
+            video.addEventListener('timeupdate', ()=>{
+                this.currentTime = video.currentTime
+            })
         },
         pause(){
             const myVid = this.$refs.video
@@ -221,6 +244,31 @@ export default {
                 myVid.play()
                 this.duration = this.$refs.video.duration
                 this.changVideoTime()
+                var wsServer = 'ws://192.168.145.128:5200'
+                this.websocket = new WebSocket(wsServer)
+                this.websocket.onopen = (evt) =>{
+                    console.log('连接websocket成功')
+                }
+
+                this.websocket.onclose = function (evt) {
+                    console.log('关闭websocket连接')
+                }
+
+                this.websocket.onmessage = (evt) =>{
+                    const data = evt.data
+                    const time = data.split(':')[0]
+                    const content = data.split(':')[1]
+                    this.barrageList.push({
+                        id: ++this.currentId,
+                        msg: content,
+                        time: 10,
+                        type: MESSAGE_TYPE.NORMAL
+                    })
+                }
+
+                this.websocket.onerror = function (evt, e) {
+                    console.log('错误信息: ' + evt.data)
+                }
             }else{
                 myVid.pause()
             }
@@ -452,6 +500,11 @@ export default {
                 }
             }
         }
+    }
+    .barrage-test{
+        width: 50px;
+        height: 50px;
+        color: white;
     }
     // 弹幕
     .barrage-container{
