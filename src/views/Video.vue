@@ -13,15 +13,19 @@
                 <div class="bililbili-left">
                     <div class="play-wrapp ">
                     <!-- 头部 -->
-
-            <vue-baberrage
-                    :isShow = "barrageIsShow"
-                    :barrageList = "barrageList"
-                    :loop = "barrageLoop"
-                    :maxWordCount = "60"
-            >
-            </vue-baberrage>
-                                        
+                        <div class="barragreshow">
+                            <vue-baberrage
+                                    :isShow = "barrageIsShow"
+                                    :barrageList = "barrageList"
+                                    :maxWordCount = "60"
+                                    :throttleGap="10">
+                                <template v-slot:default="slotProps">
+                                    <span style="color: #FAEBD7">
+                                    {{slotProps.item.msg}}
+                                    </span>
+                                </template>
+                            </vue-baberrage>
+                        </div>
                         <div class="play-wrapp-top"></div>
                         <!-- 播放器 -->
                         <div class="play-wrapp-video" @click="pause()">
@@ -135,9 +139,7 @@ export default {
             currentId: 0,
             position: 'top',
             barrageIsShow: true,
-            barrageLoop: false,
-            barrageList: [],
-            text: '12354325'
+            barrageList: []
         }
     },
     props: ['videoId'],
@@ -183,10 +185,6 @@ export default {
     watch: {
         percentProeecss (cur, old){
             this.percent = cur
-        },
-        text(cur, old){
-            console.log(this.text)
-            // this.text = cur
         }
     },
     methods: {
@@ -258,6 +256,7 @@ export default {
                     const data = evt.data
                     const time = data.split(':')[0]
                     const content = data.split(':')[1]
+                    console.log(data)
                     this.barrageList.push({
                         id: ++this.currentId,
                         msg: content,
@@ -501,11 +500,6 @@ export default {
             }
         }
     }
-    .barrage-test{
-        width: 50px;
-        height: 50px;
-        color: white;
-    }
     // 弹幕
     .barrage-container{
         width: 100%;
@@ -562,5 +556,14 @@ export default {
                 }
             }
         }
+    }
+    .barragreshow{
+        width: 100%;
+        height: 90%;
+        position: absolute;
+        z-index: 100;
+        pointer-events: none;
+        left: 0;
+        top: 0;
     }
 </style>
