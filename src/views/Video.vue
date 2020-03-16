@@ -137,7 +137,8 @@ export default {
             currentId: 0,
             position: 'top',
             barrageIsShow: true,
-            barrageList: []
+            barrageList: [],
+            time: 0
         }
     },
     props: ['videoId'],
@@ -244,7 +245,7 @@ export default {
                 this.websocket = new WebSocket(wsServer)
                 this.websocket.onopen = (evt) =>{
                     console.log('连接websocket成功')
-                    this.websocket.send(this.videoId)
+                    this.websocket.send('videoId' + ':' + this.videoId)
                 }
 
                 this.websocket.onclose = function (evt) {
@@ -253,20 +254,24 @@ export default {
 
                 this.websocket.onmessage = (evt) =>{
                     const data = evt.data
-                    this.barrageList.push({
-                        id: ++this.currentId,
-                        msg: data,
-                        time: 10,
-                        type: MESSAGE_TYPE.NORMAL
-                    })
+                    if(Number(data) === Number(this.time)){
+                        console.log('yes')
+                    }else{
+                        this.barrageList.push({
+                            id: ++this.currentId,
+                            msg: data,
+                            time: 10,
+                            type: MESSAGE_TYPE.NORMAL
+                        })
+                    }
                 }
 
                 this.websocket.onerror = function (evt, e) {
                     console.log('错误信息: ' + evt.data)
                 }
                 setInterval(()=>{
-                    const $time = Math.floor(this.currentTime)
-                    this.websocket.send($time)
+                    this.time = Math.floor(this.currentTime)
+                    this.websocket.send(this.time)
                 }, 1000)
             }else{
                 myVid.pause()
