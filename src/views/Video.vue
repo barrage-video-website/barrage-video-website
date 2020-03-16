@@ -18,7 +18,7 @@
                                     :isShow = "barrageIsShow"
                                     :barrageList = "barrageList"
                                     :maxWordCount = "60"
-                                    :throttleGap="10">
+                                    >
                                 <template v-slot:default="slotProps">
                                     <span style="color: #FAEBD7">
                                     {{slotProps.item.msg}}
@@ -98,9 +98,6 @@
                             </div>
                             <div class="barrage-input-button" @click="sentBarrage">
                                 发送
-                            </div>
-                            <div class="barrage-input-button" @click="addToList">
-                                add
                             </div>
                         </div>
                     </div>
