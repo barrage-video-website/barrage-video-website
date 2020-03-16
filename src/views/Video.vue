@@ -17,7 +17,8 @@
                             <vue-baberrage
                                     :isShow = "barrageIsShow"
                                     :barrageList = "barrageList"
-                                    :maxWordCount = "60"
+                                    :maxWordCount = "200"
+                                    :throttleGap ="50"
                                     >
                                 <template v-slot:default="slotProps">
                                     <span style="color: #FAEBD7">
@@ -207,7 +208,7 @@ export default {
             }).then(response => {
 
             })
-            this.websocket.send(this.videoId)
+            this.websocket.send(this.barrageContent)
         },
         // 获取
         getVideo(){
@@ -243,6 +244,7 @@ export default {
                 this.websocket = new WebSocket(wsServer)
                 this.websocket.onopen = (evt) =>{
                     console.log('连接websocket成功')
+                    this.websocket.send(this.videoId)
                 }
 
                 this.websocket.onclose = function (evt) {
@@ -251,11 +253,9 @@ export default {
 
                 this.websocket.onmessage = (evt) =>{
                     const data = evt.data
-                    // const time = data.split(':')[0]
-                    const content = data.split(':')[1]
                     this.barrageList.push({
                         id: ++this.currentId,
-                        msg: content,
+                        msg: data,
                         time: 10,
                         type: MESSAGE_TYPE.NORMAL
                     })
