@@ -207,7 +207,7 @@ export default {
             }).then(response => {
 
             })
-            this.websocket.send('哈哈哈')
+            this.websocket.send(this.videoId)
         },
         // 获取
         getVideo(){
@@ -251,9 +251,8 @@ export default {
 
                 this.websocket.onmessage = (evt) =>{
                     const data = evt.data
-                    const time = data.split(':')[0]
+                    // const time = data.split(':')[0]
                     const content = data.split(':')[1]
-                    console.log(data)
                     this.barrageList.push({
                         id: ++this.currentId,
                         msg: content,
@@ -265,6 +264,10 @@ export default {
                 this.websocket.onerror = function (evt, e) {
                     console.log('错误信息: ' + evt.data)
                 }
+                setInterval(()=>{
+                    const $time = Math.floor(this.currentTime)
+                    this.websocket.send($time)
+                }, 1000)
             }else{
                 myVid.pause()
             }
