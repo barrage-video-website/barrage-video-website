@@ -138,7 +138,8 @@ export default {
             position: 'top',
             barrageIsShow: true,
             barrageList: [],
-            time: 0
+            time: 0,
+            isBindWebSocker: false
         }
     },
     props: ['videoId'],
@@ -235,44 +236,54 @@ export default {
                 this.currentTime = video.currentTime
             })
         },
+        bindWebSocker(){
+            var wsServer = 'ws://192.168.145.128:5200'
+            this.websocket = new WebSocket(wsServer)
+            this.websocket.onopen = (evt) =>{
+                console.log('连接websocket成功')
+                this.websocket.send('videoId' + ':' + this.videoId)
+            }
+
+            this.websocket.onclose = function (evt) {
+                console.log('关闭websocket连接')
+            }
+
+            this.websocket.onmessage = (evt) =>{
+                const data = evt.data
+                if(Number(data) === Number(this.time)){
+                }else{
+                    this.barrageList.push({
+                        id: ++this.currentId,
+                        msg: data,
+                        time: 10,
+                        type: MESSAGE_TYPE.NORMAL
+                    })
+                }
+            }
+
+            this.websocket.onerror = function (evt, e) {
+                console.log('错误信息: ' + evt.data)
+            }
+            let lastTime
+            setInterval(()=>{
+                this.time = Math.floor(this.currentTime)
+                if(lastTime === this.time){
+                }else{
+                    this.websocket.send(this.time)
+                }
+                lastTime = this.time
+            }, 1000)
+        },
         pause(){
             const myVid = this.$refs.video
+            if(!this.isBindWebSocker){
+                this.bindWebSocker()
+                this.isBindWebSocker = true
+            }
             if(myVid.paused){
                 myVid.play()
                 this.duration = this.$refs.video.duration
                 this.changVideoTime()
-                var wsServer = 'ws://192.168.145.128:5200'
-                this.websocket = new WebSocket(wsServer)
-                this.websocket.onopen = (evt) =>{
-                    console.log('连接websocket成功')
-                    this.websocket.send('videoId' + ':' + this.videoId)
-                }
-
-                this.websocket.onclose = function (evt) {
-                    console.log('关闭websocket连接')
-                }
-
-                this.websocket.onmessage = (evt) =>{
-                    const data = evt.data
-                    if(Number(data) === Number(this.time)){
-                        console.log('yes')
-                    }else{
-                        this.barrageList.push({
-                            id: ++this.currentId,
-                            msg: data,
-                            time: 10,
-                            type: MESSAGE_TYPE.NORMAL
-                        })
-                    }
-                }
-
-                this.websocket.onerror = function (evt, e) {
-                    console.log('错误信息: ' + evt.data)
-                }
-                setInterval(()=>{
-                    this.time = Math.floor(this.currentTime)
-                    this.websocket.send(this.time)
-                }, 1000)
             }else{
                 myVid.pause()
             }

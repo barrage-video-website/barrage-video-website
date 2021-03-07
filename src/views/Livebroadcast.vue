@@ -58,7 +58,6 @@ export default {
         bililHeader
     },
     mounted(){
-        // this.load()
         setTimeout(()=>{
             this.load()
         }, 2000)
@@ -74,7 +73,8 @@ export default {
                     url: 'http://192.168.145.128:8080/live?port=9999&app=myapp&stream=mystream'
                     // ↑ 拉流示例地址，stream参数一定要和推流时所设置的流密钥一致
                 }, {
-                    fixAudioTimestampGap: false
+                    enableStashBuffer: false,
+                    autoCleanupSourceBuffer: true
                 })
                 flvPlayer.attachMediaElement(videoElement)
                 flvPlayer.load()
