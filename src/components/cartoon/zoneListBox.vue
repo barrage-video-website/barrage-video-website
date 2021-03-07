@@ -2,7 +2,7 @@
     <div class="zone-list-box">
         <div class="live-card" @click="gotoVideo(list.id,list.type)" v-for="list in lists" :key="list.id">
             <div class="pi">
-                <img :src="`http://localhost/barrage-video-website-serve/public/${list.coverPath}`">
+                <img :src="`http://192.168.145.128/barrage-video-website-serve/public/${list.coverPath}`">
             </div>
             <div class="title">{{list.coverTitle}}</div>
             <div class="up">

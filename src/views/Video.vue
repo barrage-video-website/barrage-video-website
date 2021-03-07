@@ -30,7 +30,7 @@
                         <div class="play-wrapp-top"></div>
                         <!-- 播放器 -->
                         <div class="play-wrapp-video" @click="pause()">
-                            <video  ref="video"  :src="`http://localhost/barrage-video-website-serve/public/video/${this.videoPath}`"></video>
+                            <video  ref="video"  :src="`http://192.168.145.128/barrage-video-website-serve/public/video/${this.videoPath}`"></video>
                         </div>
                         <!-- 低层 -->
                         <div class="player-video-buttom">

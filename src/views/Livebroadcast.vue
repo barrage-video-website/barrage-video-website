@@ -69,9 +69,12 @@ export default {
                 var videoElement = this.$refs.video
                 var flvPlayer = flvjs.createPlayer({
                     type: 'flv',
+                    hasAudio: false,
                     isLive: true, // 如果是直播流需要设置这个值为 true
-                    url: 'http://101.132.142.25:8080/live?port=9999&app=standardClearing&stream=mystream'
-                // ↑ 拉流示例地址，stream参数一定要和推流时所设置的流密钥一致
+                    url: 'http://192.168.145.128:8080/live?port=9999&app=myapp&stream=mystream'
+                    // ↑ 拉流示例地址，stream参数一定要和推流时所设置的流密钥一致
+                }, {
+                    fixAudioTimestampGap: false
                 })
                 flvPlayer.attachMediaElement(videoElement)
                 flvPlayer.load()
@@ -81,6 +84,18 @@ export default {
         fullscreen(){
             this.$refs.video.webkitRequestFullScreen()
         }
+    },
+    beforeDestroy(){
+        var videoElement = this.$refs.video
+        var flvPlayer = flvjs.createPlayer({
+            type: 'flv',
+            isLive: true, // 如果是直播流需要设置这个值为 true
+            url: 'http://192.168.145.128:8080/live?port=9999&app=myapp&stream=mystream'
+            // ↑ 拉流示例地址，stream参数一定要和推流时所设置的流密钥一致
+        })
+        flvPlayer.pause()
+        flvPlayer.unload()
+        flvPlayer.destroy()
     }
     
 }
