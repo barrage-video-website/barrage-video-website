@@ -33,7 +33,6 @@
 <script>
 import api from '@/api'
 import apiPrefix from '@/api/core/apiPrefix.js'
-import tokenPlayLoad from '@/api/core/tokenPlayLoad.js'
 import axios from '@/api/core/axios.js'
 import tokenManager from '@/api/core/tokenManager.js'
 import bililHeader from '@/components/header.vue'

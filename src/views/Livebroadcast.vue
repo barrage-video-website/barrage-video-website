@@ -86,7 +86,7 @@ export default {
         }
     },
     beforeDestroy(){
-        var videoElement = this.$refs.video
+        // var videoElement = this.$refs.video
         var flvPlayer = flvjs.createPlayer({
             type: 'flv',
             isLive: true, // 如果是直播流需要设置这个值为 true

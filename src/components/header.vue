@@ -123,7 +123,7 @@ export default {
         haslogin(){
             // 是否登录了
             if(tokenManager.hasToken()){
-                const userId = tokenPlayLoad.getUserId()
+                // const userId = tokenPlayLoad.getUserId()
                 const nickname = tokenPlayLoad.getNickname()
                 const headPhotoUrl = tokenPlayLoad.getHeadPhoto()
                 this.headPhotoUrl = headPhotoUrl

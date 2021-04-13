@@ -68,7 +68,6 @@ export default {
     components: {
         bililHeader,
         'd-player': VueDPlayer
-
     },
     data(){
         return{
