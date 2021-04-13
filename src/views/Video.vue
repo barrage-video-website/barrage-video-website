@@ -13,67 +13,14 @@
                 <div class="bililbili-left">
                     <div class="play-wrapp ">
                     <!-- 头部 -->
-                        <div class="barragreshow">
-                            <vue-baberrage
-                                    :isShow = "barrageIsShow"
-                                    :barrageList = "barrageList"
-                                    :maxWordCount = "200"
-                                    :throttleGap ="50"
-                                    >
-                                <template v-slot:default="slotProps">
-                                    <span style="color: #FAEBD7">
-                                    {{slotProps.item.msg}}
-                                    </span>
-                                </template>
-                            </vue-baberrage>
-                        </div>
                         <div class="play-wrapp-top"></div>
                         <!-- 播放器 -->
                         <div class="play-wrapp-video" @click="pause()">
-                            <video  ref="video"  :src="`http://192.168.145.128/barrage-video-website-serve/public/video/${this.videoPath}`"></video>
-                        </div>
-                        <!-- 低层 -->
-                        <div class="player-video-buttom">
-                            <div class="player-video-control-top" @mousedown="videoSeek">
-                                <!-- 进度条 -->
-                                <div class="play-video-progress" id="play-video-progress" ref="playVideoProgress"  v-bind:style="{width:percent + '%'}">
-                                    <div class="bui-track" id="bui-track"  ref="buiTrack" ></div>
-                                </div>
-                            </div>
-                            <!-- 进度条底下控件 -->
-                            <div class="player-video-control-main">
-                                <!-- 播放暂停,记录当前时间,总时间 -->
-                                <div class="buttom-left">
-                                    <div class="video-pause"></div>
-                                    <div class="video-time">
-                                        <!-- new Date(endDate ) -->
-                                        <span>{{this.comThisCurrentTime}}</span>
-                                        <span>/</span>
-                                        <span>{{this.comThisDurationTime}}</span>
-                                    </div>
-                                </div>
-                                <div class="buttom-right">
-                                    <div class="buttom-music button-container" title="音量">
-                                        <div class="music-progress-container">
-                                            <div class="music-num">{{this.musicPercent}}</div>
-                                            <div class="music-progress-wrap" @mousedown="musicSeek" ref="musicProgressWrap">
-                                                <div class="music-progress" ref="musicProgress" v-bind:style="{height:musicPercent + '%'}"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <div class="button-container" >自动</div>
-                                <div class="buttom-full-screen button-container" title="全屏" @click="fullscreen"></div>
-                            </div>
+                                <d-player :options="options" ref="dplayer"></d-player>
+                            <!-- <video  ref="video"  :src="`http://192.168.145.128/barrage-video-website-serve/public/video/${this.videoPath}`"></video> -->
                         </div>
                     </div>
-                    <!-- 暂停按钮 -->
-                    <div class="player-pause" @click="pause()">
-                        <div class="player-sig-container">
-                            <div class="player-sig"></div>
-                        </div>
-                    </div>
-                    <!-- 暂停按钮完 -->
-                    </div>
+
                     <!-- 播放器完 -->
                     <!-- 底部 -->
                     <div class="barrage-container">
@@ -111,15 +58,17 @@
 </template>
 
 <script>
-import { MESSAGE_TYPE } from 'vue-baberrage'
 import axios from '@/api/core/axios.js'
 import api from '@/api'
 import apiPrefix from '@/api/core/apiPrefix.js'
+import VueDPlayer from 'vue-dplayer'
 import bililHeader from '@/components/header.vue'
 export default {
     name: 'videoLayout',
     components: {
-        bililHeader
+        bililHeader,
+        'd-player': VueDPlayer
+
     },
     data(){
         return{
@@ -127,75 +76,36 @@ export default {
             userId: '',
             videoPath: '',
             videoTitle: '',
-            percent: this.percentProeecss,
-            musicPercent: 100,
-            duration: 0,
             currentTime: 0,
-            color: false,
             barrageContent: '你好',
             websocket: '',
             currentId: 0,
             position: 'top',
-            barrageIsShow: true,
-            barrageList: [],
             time: 0,
-            isBindWebSocker: false
+            dp: null,
+            isBindWebSocker: false,
+            options: {
+                container: this.$refs.dplayer,
+                danmaku: {
+                    id: '9E2E3368B56CDBB4',
+                    api: 'https://api.prprpr.me/dplayer/',
+                    // token: 'tokendemo',
+                    maximum: 1000,
+                    bottom: '25%',
+                    unlimited: true
+                }
+            }
         }
     },
     props: ['videoId'],
     mounted(){
         this.getVideo()
+        this.dp = this.$refs.dplayer.dp
     },
     destroyed(){
         this.websocket.close()
     },
-    computed: {
-        percentProeecss(){
-            return (this.currentTime / this.duration) * 100
-        },
-        comThisCurrentTime(){
-            const s = this.currentTime
-            var day = Math.floor(s / (24 * 3600))
-            var hour = Math.floor((s - day * 24 * 3600) / 3600)
-            var minute = Math.floor((s - day * 24 * 3600 - hour * 3600) / 60)
-            var second = Math.floor(s - day * 24 * 3600 - hour * 3600 - minute * 60)
-            if(minute < 10){
-                minute = '0' + minute
-            }
-            if(second < 10){
-                second = '0' + second
-            }
-            return minute + ':' + second
-        },
-        comThisDurationTime(){
-            const s = this.duration
-            var day = Math.floor(s / (24 * 3600))
-            var hour = Math.floor((s - day * 24 * 3600) / 3600)
-            var minute = Math.floor((s - day * 24 * 3600 - hour * 3600) / 60)
-            var second = Math.floor(s - day * 24 * 3600 - hour * 3600 - minute * 60)
-            if(minute < 10){
-                minute = '0' + minute
-            }
-            if(second < 10){
-                second = '0' + second
-            }
-            return minute + ':' + second
-        }
-    },
-    watch: {
-        percentProeecss (cur, old){
-            this.percent = cur
-        }
-    },
     methods: {
-        addToList () {
-            this.barrageList.push({
-                id: ++this.currentId,
-                msg: this.barrageContent,
-                time: 10,
-                type: MESSAGE_TYPE.NORMAL
-            })
-        },
         deleteBarrage(){
             axios.post(apiPrefix.api + api.deleteBarrage, {
             }).then(response => {
@@ -224,20 +134,11 @@ export default {
                 this.userId = video.userId
                 this.videoPath = video.videoPath
                 this.videoTitle = video.videoTitle
-            })
-        },
-        // 改变时间
-        changVideoTime(currentTime = 0){
-            if(currentTime !== 0){
-                this.currentTime = currentTime
-            }
-            const video = this.$refs.video
-            video.addEventListener('timeupdate', ()=>{
-                this.currentTime = video.currentTime
+                this.dp.switchVideo({ url: 'http://192.168.145.128/barrage-video-website-serve/public/video/' + this.videoPath })
             })
         },
         bindWebSocker(){
-            var wsServer = 'ws://192.168.145.128:5200'
+            const wsServer = 'ws://192.168.145.128:5200'
             this.websocket = new WebSocket(wsServer)
             this.websocket.onopen = (evt) =>{
                 console.log('连接websocket成功')
@@ -252,68 +153,31 @@ export default {
                 const data = evt.data
                 if(Number(data) === Number(this.time)){
                 }else{
-                    this.barrageList.push({
-                        id: ++this.currentId,
-                        msg: data,
-                        time: 10,
-                        type: MESSAGE_TYPE.NORMAL
+                    this.dp.danmaku.draw({
+                        text: data,
+                        color: '#fff'
                     })
                 }
             }
-
-            this.websocket.onerror = function (evt, e) {
-                console.log('错误信息: ' + evt.data)
-            }
             let lastTime
             setInterval(()=>{
-                this.time = Math.floor(this.currentTime)
+                this.time = Math.floor(this.dp.video.currentTime)
                 if(lastTime === this.time){
                 }else{
                     this.websocket.send(this.time)
                 }
                 lastTime = this.time
             }, 1000)
+
+            this.websocket.onerror = function (evt, e) {
+                console.log('错误信息: ' + evt.data)
+            }
         },
         pause(){
-            const myVid = this.$refs.video
             if(!this.isBindWebSocker){
                 this.bindWebSocker()
                 this.isBindWebSocker = true
             }
-            if(myVid.paused){
-                myVid.play()
-                this.duration = this.$refs.video.duration
-                this.changVideoTime()
-            }else{
-                myVid.pause()
-            }
-        },
-        videoSeek(e){
-            var video = this.$refs.video
-            var progress = this.$refs.playVideoProgress
-            var buiTrack = this.$refs.buiTrack
-            var length = e.clientX - progress.offsetLeft
-            var percent = length / buiTrack.offsetWidth
-            video.currentTime = percent * video.duration
-            this.percent = percent * 100
-            this.changVideoTime()
-        },
-        musicSeek(e){
-            var video = this.$refs.video
-            var musicProgress = this.$refs.musicProgress
-            var musicProgressWrap = this.$refs.musicProgressWrap
-            var length = e.clientY - 630 - musicProgress.offsetHeight
-            var percent = length / musicProgressWrap.offsetHeight
-            percent = Math.floor(percent * 100)
-            if(percent > 100){
-                percent = 100
-            }
-            this.musicPercent = percent
-            video.preventDefault()
-            video.volume = percent / 100
-        },
-        fullscreen(){
-            this.$refs.video.webkitRequestFullScreen()
         }
     }
 }
@@ -323,6 +187,10 @@ export default {
 *{
     font-size: 14px;
 }
+    .video{
+        width: 100%;
+        height: 100%;
+    }
     #bilil-header{
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
     }
@@ -377,144 +245,7 @@ export default {
             }
 
         }
-        // 暂停符号
-        .player-pause{
-            width: 64px;
-            height: 64px;
-            background: white;
-            position: absolute;
-            right: 34px;
-            bottom: 70px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            .player-sig-container{
-                position: relative;
-            }
-            .player-sig{
-                position: absolute;
-                top: -15px;
-                left: -10px;
-                width: 0;
-                border-top: 20px solid transparent;
-                border-right: 20px solid transparent;
-                border-bottom: 20px solid transparent;
-                border-left: 20px solid black;
 
-            }
-        }
-    }
-    // 进度条
-    .player-video-buttom{
-        width: 100%;
-        height: 50px;
-        box-sizing: border-box;
-        padding: 0 12px;
-            .player-video-control-top{
-                transition:  opacity .2s ease-in;
-                cursor: pointer;
-                opacity: 1;
-                height: 16px;
-                .play-video-progress{
-                    width: 0;
-                    height: 4px !important;
-                    transition: all .5;
-                    background: hsla(0,0%,100%,.2);
-                    .bui-track{
-                        width: 940px;
-                        background: hsla(0,0%,100%,.3);
-                        height: 4px ;
-                    }
-                }
-            }
-    }
-    // 进度条下面
-    .player-video-control-main{
-        width: 100%;
-        height: 35px;
-        .buttom-left{
-            height: 100%;
-            float: left;
-            .video-pause{
-                cursor: pointer;
-                width: 0;
-                border-top: 10px solid transparent;
-                border-right: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-                border-left: 10px solid white;
-                border-radius: 4px;
-                margin-left: 10px;
-                margin-right: 10px;
-                display: inline-block;
-                vertical-align: top;
-            }
-            .video-time{
-                display: inline-block;
-                width: 90px;
-                height: 22px;
-                color: #fff
-            }
-        }
-        .buttom-right{
-            height: 100%;
-            float: right;
-            display: flex;
-            color: #fff;
-            .button-container{
-                margin-right: 10px;
-                font-size: 15px;
-                height: 22px;
-                width: 30px;
-                cursor: pointer;
-            }
-            .buttom-full-screen{
-                background-image: url('../pictures/icons.png');
-                background-position-x: -276px;
-                background-position-y: -918px;
-            }
-            .buttom-music{
-                background-image: url('../pictures/icons.png');
-                background-position-x: -666px;
-                background-position-y: -1686px;
-                position: relative;
-                &:hover{
-                    .music-progress-container{
-                        display: block;
-                    }
-                }
-                .music-progress-container{
-                    width: 36px;
-                    height: 100px;
-                    position: absolute;
-                    left: -10px;
-                    top: -124px;
-                    background: #104;
-                    color: #fff;
-                    display: none;
-                    .music-num{
-                        display: flex;
-                        justify-content: center;
-                    }
-                    .music-progress-wrap{
-                        transform: rotate(180deg);
-                        transform-origin:50 50%;
-                        position: absolute;
-                        left: 15px;
-                        top: 23px;
-                        line-height: 70px;
-                        text-align: center;
-                        width: 4px;
-                        height: 70px;
-                        background: white;
-                    }
-                    .music-progress{
-                        width: 100%;
-                        background:blue;
-                    }
-                }
-            }
-        }
     }
     // 弹幕
     .barrage-container{
