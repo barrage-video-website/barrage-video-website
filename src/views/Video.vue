@@ -238,11 +238,10 @@ export default {
         .play-wrapp-video{
             position: relative;
             cursor: pointer;
-            video{
-                width: 964px;
-                height: 550px;
-            }
-
+            // video{
+            //     width: 964px;
+            //     height: 550px;
+            // }
         }
 
     }
