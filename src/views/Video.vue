@@ -82,6 +82,7 @@ export default {
             position: 'top',
             time: 0,
             dp: null,
+            color: null,
             isBindWebSocker: false,
             options: {
                 container: this.$refs.dplayer,
@@ -105,21 +106,16 @@ export default {
         this.websocket.close()
     },
     methods: {
-        deleteBarrage(){
-            axios.post(apiPrefix.api + api.deleteBarrage, {
-            }).then(response => {
-                console.log('删除成功')
-            })
-        },
         sentBarrage(){
             axios.post(apiPrefix.api + api.sentBarrage, {
                 videoId: this.videoId,
                 barrage: this.barrageContent,
                 currentTime: this.currentTime
             }).then(response => {
-
+                this.dp.danmaku.draw({
+                    text: this.barrageContent
+                })
             })
-            this.websocket.send(this.barrageContent)
         },
         // 获取
         getVideo(){
@@ -140,12 +136,10 @@ export default {
             const wsServer = 'ws://192.168.145.128:5200'
             this.websocket = new WebSocket(wsServer)
             this.websocket.onopen = (evt) =>{
-                console.log('连接websocket成功')
                 this.websocket.send('videoId' + ':' + this.videoId)
             }
 
             this.websocket.onclose = function (evt) {
-                console.log('关闭websocket连接')
             }
 
             this.websocket.onmessage = (evt) =>{
@@ -153,8 +147,7 @@ export default {
                 if(Number(data) === Number(this.time)){
                 }else{
                     this.dp.danmaku.draw({
-                        text: data,
-                        color: '#fff'
+                        text: data
                     })
                 }
             }
