@@ -26,6 +26,9 @@
 import bililHeader from '@/components/header.vue'
 import flvjs from 'flv.js'
 import VueDPlayer from 'vue-dplayer'
+import axios from '@/api/core/axios.js'
+import api from '@/api'
+import apiPrefix from '@/api/core/apiPrefix.js'
 export default {
     name: 'live',
     components: {
@@ -39,7 +42,7 @@ export default {
                 container: this.$refs.dplayer,
                 live: true,
                 video: {
-                    url: 'http://192.168.145.128:8080/live?port=9999&app=myapp&stream=mystream',
+                    url: 'http://' + this.$store.state.serverIp + ':8080/live?port=9999&app=myapp&stream=mystream',
                     type: 'customFlv',
                     customType: {
                         customFlv: function (video, player) {
@@ -61,16 +64,12 @@ export default {
                 //     bottom: '25%',
                 //     unlimited: true
                 // }
-            }
+            },
+            serverIp: ''
         }
     },
     mounted(){
-        // setTimeout(()=>{
-        //     this.load()
-        // }, 2000)
         this.dp = this.$refs.dplayer.dp
-        // this.load()
-        // console.log(this.dp)
     },
     methods: {
         load(){
@@ -80,7 +79,7 @@ export default {
                     type: 'flv',
                     hasAudio: false,
                     isLive: true, // 如果是直播流需要设置这个值为 true
-                    url: 'http://192.168.145.128:8080/live?port=9999&app=myapp&stream=mystream'
+                    url: 'http://' + this.$store.state.serverIp + ':8080/live?port=9999&app=myapp&stream=mystream'
                     // ↑ 拉流示例地址，stream参数一定要和推流时所设置的流密钥一致
                 }, {
                     enableStashBuffer: false,
@@ -100,7 +99,7 @@ export default {
         var flvPlayer = flvjs.createPlayer({
             type: 'flv',
             isLive: true, // 如果是直播流需要设置这个值为 true
-            url: 'http://192.168.145.128:8080/live?port=9999&app=myapp&stream=mystream'
+            url: 'http://' + this.$store.state.serverIp + ':8080/live?port=9999&app=myapp&stream=mystream'
             // ↑ 拉流示例地址，stream参数一定要和推流时所设置的流密钥一致
         })
         flvPlayer.pause()

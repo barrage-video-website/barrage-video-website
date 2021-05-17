@@ -1,4 +1,5 @@
 module.exports = {
+    // publicPath: '/dist',
     devServer: {
         proxy: {
             [process.env.VUE_APP_API_URL_PREFIX]: {
@@ -7,8 +8,8 @@ module.exports = {
                     ['^' + process.env.VUE_APP_API_URL_PREFIX]: ''
                 }
             },
-            '/live/': {
-                target: 'http://192.168.145.128:8080',
+            [process.env.VUE_APP_API_LIVE_PREFIX]: {
+                target: process.env.VUE_APP_LIVE_PROXY_TARGET,
                 changOrigin: true
             }
         }

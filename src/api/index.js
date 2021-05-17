@@ -14,5 +14,12 @@ export default{
     // 获取视频信息
     getVideo: '/get-video',
     // 发送弹幕接口
-    sentBarrage: '/sent-barrage'
+    sentBarrage: '/sent-barrage',
+    // 获取评论区
+    getCommentList: '/get-comment-list',
+    // 发送评论
+    sendComment: '/send-comment',
+    // 发送评论
+    getServerIp: '/get-server-ip'
+
 }

@@ -49,7 +49,6 @@ export default {
         // 获取文件
         handleImg(file) {
             this.img = file.raw
-            console.log(this.img)
         },
         // 上传
         submitUpload(){

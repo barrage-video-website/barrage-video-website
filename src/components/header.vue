@@ -66,7 +66,7 @@
                     <div v-if="islogin">
                         <nav-item>
                             <template v-slot:title >
-                                <img :src="`http://localhost/barrage-video-website-serve/public/${headPhotoUrl}`" alt="头像" class="head-photo">
+                                <img :src="`http://${$store.state.serverIp}/barrage-video-website-serve/public/${headPhotoUrl}`" alt="头像" class="head-photo">
                             </template>
                         </nav-item>
                     </div>
@@ -104,13 +104,25 @@ export default {
         return {
             islogin: false,
             nickname: '',
-            headPhotoUrl: ''
+            headPhotoUrl: '',
+            serverIp: null
         }
     },
     created(){
         this.haslogin()
+        this.getServerIp()
+    },
+    updated(){
+        // this.serverIp = this.$store.state.serverIp
     },
     methods: {
+        getServerIp(){
+            axios.get(apiPrefix.api + api.getServerIp, {
+
+            }).then(response => {
+                this.$store.dispatch('setIp', response.data.data.serverIp)
+            })
+        },
         goToRegister(){
             this.$router.push({ name: 'Register' })
         },

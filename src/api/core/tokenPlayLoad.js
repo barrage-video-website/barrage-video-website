@@ -20,6 +20,11 @@ export default {
     getHeadPhoto(){
         const token = tokenManager.getToken()
         return computePayload(token).headPhoto
+    },
+
+    getServerIp(){
+        const token = tokenManager.getToken()
+        return computePayload(token).serverIp
     }
     
 }

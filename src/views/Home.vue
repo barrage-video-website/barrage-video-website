@@ -74,14 +74,23 @@ export default {
     created(){
         this.getCartoon(1)
         this.getlive(1)
+        // this.getServerIp()
     },
     data(){
         return{
             cartoons: [],
-            lives: []
+            lives: [],
+            serverIp: ''
         }
     },
     methods: {
+        // getServerIp(){
+        //     axios.get(apiPrefix.api + api.getServerIp, {
+
+        //     }).then(response => {
+        //         this.serverIp = response.data.data.serverIp
+        //     })
+        // },
         getCartoon(page){
             axios.get(apiPrefix.api + api.getVideoList, {
                 params: {
